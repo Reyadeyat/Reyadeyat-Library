@@ -1,7 +1,7 @@
 #! /bin/sh
 
 if [ -z "$1" ] || [ "${1,,}" = "default" ]; then
-  echo "Setting default MODE = INCLUDE-MODE and BUILD-MODE = DEBUG parameters [MODE { LIBRARY, INCLUDE }, BUILD { DEBUG, RELEASE }]"
+  echo "Setting default MODE = INCLUDE and BUILD = DEBUG parameters [MODE { LIBRARY, INCLUDE }, BUILD { DEBUG, RELEASE }]"
   DEFAULT_MODE="INCLUDE"
   DEFAULT_BUILD="DEBUG"
 else
@@ -18,57 +18,31 @@ fi
 MODE=$DEFAULT_MODE
 BUILD=$DEFAULT_BUILD
 
+PROJECT_PATH=$(pwd)
+
 clear
 pwd
 echo "-----------------------------------------------------------------------------------"
-echo "MODE = $MODE - BUILD = $BUILD"
-#cd ../Reyadeyat-Modules/Reyadeyat-Modules
 
-echo "Cleaning Reyadeyat Machine"
-rm -rf ./Reyadeyat-Modules/build
-rm -rf ./Reyadeyat-Modules/lib
+#Reyadeyat-Library
+echo "Building Reyadeyat-Library MODE = $MODE - BUILD = $BUILD - PROJECT_PATH = $PROJECT_PATH"
 
-echo "Building ./Reyadeyat-Modules/src/reyadeyat/memory/memory.0.0.0"
-echo "Configuration ..."
-cmake ./Reyadeyat-Modules/src/reyadeyat/memory/memory.0.0.0 -B./Reyadeyat-Modules/build/reyadeyat/memory/memory.0.0.0
-echo "Buildinging ..."
-cmake --build ./Reyadeyat-Modules/build/reyadeyat/memory/memory.0.0.0 --target all -j 4
-echo "Installing ..."
-cmake --install ./Reyadeyat-Modules/build/reyadeyat/memory/memory.0.0.0 --prefix=./Reyadeyat-Modules
-echo "Completed ..."
-readelf -s ./Reyadeyat-Modules/lib/reyadeyat-memory-lib.0.0.0.so
-objdump -T ./Reyadeyat-Modules/lib/reyadeyat-memory-lib.0.0.0.so
+#Reyadeyat-Modules
+echo "Building Reyadeyat Modules"
 
-echo "Building reyadeyat-memory-lib/src/reyadeyat/memory MODE = $MODE - BUILD = $BUILD"
-echo "Configuration ..."
-cmake ./Reyadeyat-Modules -B./Reyadeyat-Modules/build/reyadeyat/memory -DMODE=$MODE -DBUILD=$BUILD
-echo "Buildinging ..."
-cmake --build ./Reyadeyat-Modules/build/reyadeyat/memory --target all -j 4
-echo "Installing ..."
-cmake --install ./Reyadeyat-Modules/build/reyadeyat/memory --prefix=./Reyadeyat-Modules
-echo "Completed ..."
-readelf -s ./Reyadeyat-Modules/lib/reyadeyat-memory-lib.so
-objdump -T ./Reyadeyat-Modules/lib/reyadeyat-memory-lib.so
+#Memory Module
+echo "Building Reyadeyat Modules - Memory 0.0.0"
+$PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/memory/memory.0.0.0/build.sh $MODE $BUILD $PROJECT_PATH
+echo "Building Reyadeyat Modules - Memory API"
+$PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/memory/build.sh $MODE $BUILD $PROJECT_PATH
 
-echo "Cleaning Reyadeyat-Executables"
-rm -rf ./Reyadeyat-Executables/bin
-rm -rf ./Reyadeyat-Executables/build
-rm -rf ./Reyadeyat-Executables/include
-rm -rf ./Reyadeyat-Executables/lib
+#Utilities Module
+echo "Building Reyadeyat Modules - Utilities 0.0.0"
+$PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/utilities/utilities.0.0.0/build.sh $MODE $BUILD $PROJECT_PATH
+echo "Building Reyadeyat Modules - Utilities API"
+$PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/utilities/build.sh $MODE $BUILD $PROJECT_PATH
 
-echo "Building Reyadeyat-Executables MODE = $MODE - BUILD = $BUILD"
-echo "Configuration ..."
-cmake ./Reyadeyat-Executables -B./Reyadeyat-Executables/build -DMODE=$MODE -DBUILD=$BUILD
-echo "Buildinging ..."
-cmake --build ./Reyadeyat-Executables/build --target all -j 4
-echo "Installing ..."
-cmake --install ./Reyadeyat-Executables/build --prefix=./Reyadeyat-Executables/
-echo "Completed ..."
-read -p "Run Program? (y/n) " CHOICE
-if [ "$CHOICE" = "y" ] || [ "$CHOICE" = "yes" ]; then
-  echo "Done, Programm is now running ..."
-  ./Reyadeyat-Executables/bin/reyadeyat-c
-  echo "Done, Programm has finished executing ..."
-else
-  echo "Done, Programm doesn't run ..."
-fi
+#Executables
+echo "Building Reyadeyat-Executables"
+
+$PROJECT_PATH/Reyadeyat-Executables/src/build.sh $MODE $BUILD $PROJECT_PATH

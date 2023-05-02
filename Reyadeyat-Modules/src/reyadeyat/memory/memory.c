@@ -67,7 +67,8 @@ Reyadeyat_Memory_Process *get_reyadeyat_memory_process(char *lib_path, char *ver
 #elif MODE == INCLUDE
 
 #include "reyadeyat/memory/memory.0.0.0/external-memory.0.0.0.h"
-#include "reyadeyat/memory/memory.0.0.0/external-memory-tools.0.0.0.h"
+#include "reyadeyat/utilities//utilities.0.0.0/external-utilities.0.0.0.h"
+
 Reyadeyat_Memory_Process *get_reyadeyat_memory_process(char *lib_path, char *version_number) {
     printf("Mode INCLUDE defined %d\n", INCLUDE);
     printf("get_reyadeyat_memory_process lib_path => %s\n", lib_path);

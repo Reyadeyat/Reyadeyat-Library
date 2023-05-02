@@ -26,12 +26,12 @@
  * @since 2023.04.01
  */
 
-#ifndef REYADEYAT_EXTERNAL_MEMORY_TOOLS_0_0_0_H
-#define REYADEYAT_EXTERNAL_MEMORY_TOOLS_0_0_0_H
+#ifndef REYADEYAT_EXTERNAL_UTILITIES_TOOLS_0_0_0_H
+#define REYADEYAT_EXTERNAL_UTILITIES_TOOLS_0_0_0_H
 
 #include "reyadeyat/reyadeyat.h"
 
-void external_reyadeyat_memory_number_to_char_v_0_0_0(char *input_number_type, const void *input_number, char* output_buffer, int *output_length);
+void external_reyadeyat_utilities_number_to_char_v_0_0_0(char *input_number_type, const void *input_number, char* output_buffer, int *output_length);
 
 
-#endif //REYADEYAT_EXTERNAL_MEMORY_TOOLS_0_0_0_H
+#endif //REYADEYAT_EXTERNAL_UTILITIES_TOOLS_0_0_0_H
