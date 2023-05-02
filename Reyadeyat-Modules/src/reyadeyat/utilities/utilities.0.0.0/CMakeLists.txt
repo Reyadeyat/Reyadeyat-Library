@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.24)
-project(reyadeyat-memory-lib.0.0.0 C)
+project(reyadeyat-utilities-lib.0.0.0 C)
 #set(PREFIX "")
 #set(CMAKE_STATIC_LIBRARY_PREFIX "")
 set(CMAKE_SHARED_LIBRARY_PREFIX "")

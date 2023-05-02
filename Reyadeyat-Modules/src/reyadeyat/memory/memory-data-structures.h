@@ -65,21 +65,28 @@ REYADEYAT_DATA_TYPE(Reyadeyat_Tree_Node_Chain) {
     void *sequence_list;
 };
 
-REYADEYAT_DATA_TYPE(Reyadeyat_Buffer) {
+REYADEYAT_DATA_TYPE(Reyadeyat_String) {
     int length;
+    int size;
+    char *string;
+};
+
+REYADEYAT_DATA_TYPE(Reyadeyat_String_Block) {
+    Reyadeyat_String *string_1;
+    Reyadeyat_String *string_2;
+    Reyadeyat_String *string_3;
+};
+
+REYADEYAT_DATA_TYPE(Reyadeyat_Buffer) {
+    int size;
+    int padded_size;
     char *buffer;
 };
 
-REYADEYAT_DATA_TYPE(Reyadeyat_Structure_Pointer) {
+REYADEYAT_DATA_TYPE(Reyadeyat_Buffer_Block) {
     Reyadeyat_Buffer *buffer_1;
     Reyadeyat_Buffer *buffer_2;
     Reyadeyat_Buffer *buffer_3;
-};
-
-REYADEYAT_DATA_TYPE(Reyadeyat_Structure_Block) {
-    Reyadeyat_Buffer buffer_1;
-    Reyadeyat_Buffer buffer_2;
-    Reyadeyat_Buffer buffer_3;
 };
 
 typedef struct _Reyadeyat_Memory_Data_ {

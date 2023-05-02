@@ -26,25 +26,13 @@
  * @since 2023.04.01
  */
 
-#include "external-memory-tools.0.0.0.h"
+#ifndef REYADEYAT_UTILITIES_H
+#define REYADEYAT_UTILITIES_H
 
-void external_reyadeyat_memory_number_to_char_v_0_0_0(char *input_number_type, const void *input_number, char* output_buffer, int *output_length) {
-    int count = 1;
-    int digit = 0;
-    int number = *((int*)input_number);
-    if (number == 0) {
-        output_buffer[0] = '0';
-        //output_buffer[1] = '\0';
-        *output_length = 1;
-        return;
-    }
-    while (number / (count*10) > 0) {
-        //digit = *((int*)input_number) >> count;
-        digit = number % (count*10);
-        output_buffer[count] = '0'+digit;
-        count++;
-    }
-    //output_buffer[count] = '\0';
-    //*output_length = count+1;
-    *output_length = count;
-}
+typedef struct _Reyadeyat_Utilities_Process_ {
+    void (*external_reyadeyat_utilities_number_to_char)(char *input_number_type, const void *, char *, int *);
+} Reyadeyat_Utilities_Process;
+
+extern Reyadeyat_Utilities_Process* get_reyadeyat_utilities_process(char* lib_path, char *version_number);
+
+#endif //REYADEYAT_UTILITIES_H

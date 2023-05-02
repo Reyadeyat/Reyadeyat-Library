@@ -26,4 +26,4 @@
  * @since 2023.04.01
  */
 
-#include "internal-memory-tools.0.0.0.h"
+#include "internal-utilities.0.0.0.h"
