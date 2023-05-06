@@ -26,6 +26,15 @@
  * @since 2023.04.01
  */
 
-#include "reyadeyat/reyadeyat.h"
+#ifndef REYADEYAT_C_FILE_DATA_STRUCTURES_H
+#define REYADEYAT_C_FILE_DATA_STRUCTURES_H
 
-#include "internal-utilities.0.0.0.h"
+REYADEYAT_DATA_TYPE(Reyadeyat_File) {
+    void *file;
+};
+
+REYADEYAT_DATA_TYPE(Reyadeyat_File_Data) {
+    char *version;
+};
+
+#endif //REYADEYAT_C_FILE_DATA_STRUCTURES_H

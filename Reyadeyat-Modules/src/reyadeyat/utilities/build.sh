@@ -26,5 +26,10 @@ cmake --build $PROJECT_PATH/Reyadeyat-Modules/build/reyadeyat/utilities --target
 echo "Installing ..."
 cmake --install $PROJECT_PATH/Reyadeyat-Modules/build/reyadeyat/utilities --prefix=$PROJECT_PATH/Reyadeyat-Modules
 echo "Completed ..."
-readelf -s $PROJECT_PATH/Reyadeyat-Modules/lib/reyadeyat-utilities-lib.so
-objdump -T $PROJECT_PATH/Reyadeyat-Modules/lib/reyadeyat-utilities-lib.so
+
+if [ "${MODE,,}" = "LIBRARY" ]; then
+  readelf -s $PROJECT_PATH/Reyadeyat-Modules/lib/reyadeyat-utilities-lib.so
+  objdump -T $PROJECT_PATH/Reyadeyat-Modules/lib/reyadeyat-utilities-lib.so
+else
+  echo "Building MODE is INCLUDE no library API shall be generated"
+fi

@@ -29,14 +29,20 @@
 #ifndef REYADEYAT_MEMORY_H
 #define REYADEYAT_MEMORY_H
 
-#include "memory-data-structures.h"
+REYADEYAT_DATA_TYPE(Reyadeyat_Memory_Process) {
+    void (*construct)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list);
+    void (*destruct)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list);
+    void (*process)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list);
+    void (*create_memory_page)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list);
+    void (*init_memory_page)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list);
+    void (*fetch_memory_page)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list);
+    void (*claim_memory_page)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list);
+    void (*copy_memory_page_to_memory_page)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list);
+    void (*copy_memory_page_to_file_page)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list);
+    void (*copy_file_page_to_memory_page)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list);
+    void (*copy_file_page_to_file_page)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list);
+};
 
-typedef struct _Reyadeyat_Memory_Process_ {
-    void (*construct)(Reyadeyat_Memory_Data *reyadeyat_memory_data);
-    void (*destruct)(Reyadeyat_Memory_Data *reyadeyat_memory_data);
-    int (*process)(Reyadeyat_Memory_Data *reyadeyat_memory_data);
-} Reyadeyat_Memory_Process;
-
-extern Reyadeyat_Memory_Process* get_reyadeyat_memory_process(char* lib_path, char *version_number);
+extern Reyadeyat_Memory_Process* get_reyadeyat_memory_process(char* lib_path, char *version_number, Reyadeyat_Log_List *reyadeyat_log_list);
 
 #endif //REYADEYAT_MEMORY_H

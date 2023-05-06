@@ -29,12 +29,25 @@
 #ifndef REYADEYAT_H
 #define REYADEYAT_H
 
-#include <assert.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include <dlfcn.h>
+#include <stdint.h>
+#include <assert.h>
+#include <stdarg.h>
+#include <stdio.h>
 #include <string.h>
+#include <time.h>
+#include <sys/time.h>
 
+typedef struct Reyadeyat_Process Reyadeyat_Process;
+
+#include "reyadeyat/core.h"
+#include "reyadeyat/log/log.h"
+#include "reyadeyat/file/file-data-structures.h"
+#include "reyadeyat/file/file.h"
 #include "reyadeyat/memory/memory-data-structures.h"
+#include "reyadeyat/memory/memory.h"
+#include "reyadeyat/utilities/utilities.h"
 
 //MODE {LIBRARY, INCLUDE}
 #define LIBRARY 1
@@ -52,5 +65,10 @@
 #define BUILD DEBUG
 #endif
 
+struct Reyadeyat_Process {
+    Reyadeyat_Utilities_Process *utilities_process;
+    Reyadeyat_File_Process *file_process;
+    Reyadeyat_Memory_Process *memory_process;
+};
 
 #endif //REYADEYAT_H

@@ -13,6 +13,8 @@ else
     echo "Pass BUILD { DEBUG, RELEASE }"
     exit 1
   fi
+  DEFAULT_MODE="$1"
+  DEFAULT_BUILD="$2"
 fi
 
 MODE=$DEFAULT_MODE
@@ -29,6 +31,12 @@ echo "Building Reyadeyat-Library MODE = $MODE - BUILD = $BUILD - PROJECT_PATH = 
 
 #Reyadeyat-Modules
 echo "Building Reyadeyat Modules"
+
+#File Module
+echo "Building Reyadeyat Modules - File 0.0.0"
+$PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/file/file.0.0.0/build.sh $MODE $BUILD $PROJECT_PATH
+echo "Building Reyadeyat Modules - File API"
+$PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/file/build.sh $MODE $BUILD $PROJECT_PATH
 
 #Memory Module
 echo "Building Reyadeyat Modules - Memory 0.0.0"
