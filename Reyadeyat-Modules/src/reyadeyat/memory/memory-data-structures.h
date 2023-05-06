@@ -26,10 +26,8 @@
  * @since 2023.04.01
  */
 
-#ifndef REYADEYAT_C_MEMORY_MEMORY_DATA_STRUCTURES_H
-#define REYADEYAT_C_MEMORY_MEMORY_DATA_STRUCTURES_H
-
-#define REYADEYAT_DATA_TYPE(DATA_TYPE) typedef struct DATA_TYPE DATA_TYPE; struct DATA_TYPE
+#ifndef REYADEYAT_C_MEMORY_DATA_STRUCTURES_H
+#define REYADEYAT_C_MEMORY_DATA_STRUCTURES_H
 
 REYADEYAT_DATA_TYPE(Reyadeyat_Node_Sequence) {
     void *structure;
@@ -89,7 +87,13 @@ REYADEYAT_DATA_TYPE(Reyadeyat_Buffer_Block) {
     Reyadeyat_Buffer *buffer_3;
 };
 
-typedef struct _Reyadeyat_Memory_Data_ {
+REYADEYAT_DATA_TYPE(Reyadeyat_Memory_Manager_Dictionary) {
+    Reyadeyat_Buffer *buffer_1;
+    Reyadeyat_Buffer *buffer_2;
+    Reyadeyat_Buffer *buffer_3;
+};
+
+REYADEYAT_DATA_TYPE(Reyadeyat_Memory_Data) {
     /**@since 0.0.0*/
     char* version;
     /**@since 0.0.0*/
@@ -98,6 +102,6 @@ typedef struct _Reyadeyat_Memory_Data_ {
     unsigned int buffer_size;
     /**@since 0.0.1*/
     unsigned long buffer_size_long;
-} Reyadeyat_Memory_Data;
+};
 
-#endif //REYADEYAT_C_MEMORY_MEMORY_DATA_STRUCTURES_H
+#endif //REYADEYAT_C_MEMORY_DATA_STRUCTURES_H

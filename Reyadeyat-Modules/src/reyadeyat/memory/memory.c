@@ -26,18 +26,12 @@
  * @since 2023.04.01
  */
 
-
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "reyadeyat/memory/memory.h"
 #include "reyadeyat/reyadeyat.h"
 
 #if MODE == LIBRARY
 
 #include <dlfcn.h>
-Reyadeyat_Memory_Process *get_reyadeyat_memory_process(char *lib_path, char *version_number) {
+Reyadeyat_Memory_Process *get_reyadeyat_memory_process(char *lib_path, char *version_number, Reyadeyat_Error_List *reyadeyat_error_list) {
     printf("Mode LIBRARY defined %d\n", LIBRARY);
     printf("get_reyadeyat_memory_process lib_path => %s\n", lib_path);
     if (strcmp(version_number, "0.0.0") == 0) {
@@ -49,16 +43,17 @@ Reyadeyat_Memory_Process *get_reyadeyat_memory_process(char *lib_path, char *ver
             printf("Error Loading lib file '%s' => %s\n", lib_path, dl_error);
             return NULL;
         }
-        void (*external_reyadeyat_memory_construct)(Reyadeyat_Memory_Data *);
-        void (*external_reyadeyat_memory_destruct)(Reyadeyat_Memory_Data *);
-        int (*external_reyadeyat_memory_process)(Reyadeyat_Memory_Data *);
-        external_reyadeyat_memory_construct = dlsym(handle, "external_reyadeyat_memory_construct_v_0_0_0");
-        external_reyadeyat_memory_destruct = dlsym(handle, "external_reyadeyat_memory_destruct_v_0_0_0");
-        external_reyadeyat_memory_process = dlsym(handle, "external_reyadeyat_memory_process_v_0_0_0");
-        Reyadeyat_Memory_Process *reyadeyat_memory_process = malloc(sizeof(Reyadeyat_Memory_Process));
-        reyadeyat_memory_process->construct = external_reyadeyat_memory_construct;
-        reyadeyat_memory_process->destruct = external_reyadeyat_memory_destruct;
-        reyadeyat_memory_process->process = external_reyadeyat_memory_process;
+        reyadeyat_memory_process->construct = dlsym(handle, "external_reyadeyat_memory_construct_v_0_0_0");
+        reyadeyat_memory_process->destruct = dlsym(handle, "external_reyadeyat_memory_destruct_v_0_0_0");
+        reyadeyat_memory_process->process = dlsym(handle, "external_reyadeyat_memory_process_v_0_0_0");
+        reyadeyat_memory_process->create_memory_page = dlsym(handle, "external_reyadeyat_memory_create_memory_page_v_0_0_0");
+        reyadeyat_memory_process->init_memory_page = dlsym(handle, "external_reyadeyat_memory_init_memory_page_v_0_0_0");
+        reyadeyat_memory_process->fetch_memory_page = dlsym(handle, "external_reyadeyat_memory_fetch_memory_page_v_0_0_0");
+        reyadeyat_memory_process->claim_memory_page = dlsym(handle, "external_reyadeyat_memory_claim_memory_page_v_0_0_0");
+        reyadeyat_memory_process->copy_memory_page_to_memory_page = dlsym(handle, "external_reyadeyat_memory_copy_memory_page_to_memory_page_v_0_0_0");
+        reyadeyat_memory_process->copy_memory_page_to_file_page = dlsym(handle, "external_reyadeyat_memory_copy_memory_page_to_file_page_v_0_0_0");
+        reyadeyat_memory_process->copy_file_page_to_memory_page = dlsym(handle, "external_reyadeyat_memory_copy_file_page_to_memory_page_v_0_0_0");
+        reyadeyat_memory_process->copy_file_page_to_file_page = dlsym(handle, "external_reyadeyat_memory_copy_file_page_to_file_page_v_0_0_0");
         return reyadeyat_memory_process;
     }
     return NULL;
@@ -69,20 +64,25 @@ Reyadeyat_Memory_Process *get_reyadeyat_memory_process(char *lib_path, char *ver
 #include "reyadeyat/memory/memory.0.0.0/external-memory.0.0.0.h"
 #include "reyadeyat/utilities//utilities.0.0.0/external-utilities.0.0.0.h"
 
-Reyadeyat_Memory_Process *get_reyadeyat_memory_process(char *lib_path, char *version_number) {
-    printf("Mode INCLUDE defined %d\n", INCLUDE);
-    printf("get_reyadeyat_memory_process lib_path => %s\n", lib_path);
+Reyadeyat_Memory_Process *get_reyadeyat_memory_process(char *lib_path, char *version_number, Reyadeyat_Log_List *reyadeyat_log_list_main) {
+    //Reyadeyat_Log reyadeyat_log[100];
+    //Reyadeyat_Log_List *reyadeyat_log_list_memory = &((Reyadeyat_Log_List){.size = 10, .cursor = 1, .log_list = reyadeyat_log});
+    reyadeyat_log_add_log_to_list(__LINE__, __func__, __FILE_NAME__, reyadeyat_log_list_main, "Initializing Memory Module - Mode INCLUDE defined %d", INCLUDE);
+    reyadeyat_log_add_log_to_list(__LINE__, __func__, __FILE_NAME__, reyadeyat_log_list_main, "get_reyadeyat_memory_process lib_path => %s", lib_path);
     if (strcmp(version_number, "0.0.0") == 0) {
-        void (*external_reyadeyat_memory_construct)(Reyadeyat_Memory_Data *);
-        void (*external_reyadeyat_memory_destruct)(Reyadeyat_Memory_Data *);
-        int (*external_reyadeyat_memory_process)(Reyadeyat_Memory_Data *);
-        external_reyadeyat_memory_construct = external_reyadeyat_memory_construct_v_0_0_0;
-        external_reyadeyat_memory_destruct = external_reyadeyat_memory_destruct_v_0_0_0;
-        external_reyadeyat_memory_process = external_reyadeyat_memory_process_v_0_0_0;
         Reyadeyat_Memory_Process *reyadeyat_memory_process = malloc(sizeof(Reyadeyat_Memory_Process));
-        reyadeyat_memory_process->construct = external_reyadeyat_memory_construct;
-        reyadeyat_memory_process->destruct = external_reyadeyat_memory_destruct;
-        reyadeyat_memory_process->process = external_reyadeyat_memory_process;
+        reyadeyat_memory_process->construct = external_reyadeyat_memory_construct_v_0_0_0;
+        reyadeyat_memory_process->destruct = external_reyadeyat_memory_destruct_v_0_0_0;
+        reyadeyat_memory_process->process = external_reyadeyat_memory_process_v_0_0_0;
+        reyadeyat_memory_process->create_memory_page = external_reyadeyat_memory_create_memory_page_v_0_0_0;
+        reyadeyat_memory_process->init_memory_page = external_reyadeyat_memory_init_memory_page_v_0_0_0;
+        reyadeyat_memory_process->fetch_memory_page = external_reyadeyat_memory_fetch_memory_page_v_0_0_0;
+        reyadeyat_memory_process->claim_memory_page = external_reyadeyat_memory_claim_memory_page_v_0_0_0;
+        reyadeyat_memory_process->copy_memory_page_to_memory_page = external_reyadeyat_memory_copy_memory_page_to_memory_page_v_0_0_0;
+        reyadeyat_memory_process->copy_memory_page_to_file_page = external_reyadeyat_memory_copy_memory_page_to_file_page_v_0_0_0;
+        reyadeyat_memory_process->copy_file_page_to_memory_page = external_reyadeyat_memory_copy_file_page_to_memory_page_v_0_0_0;
+        reyadeyat_memory_process->copy_file_page_to_file_page = external_reyadeyat_memory_copy_file_page_to_file_page_v_0_0_0;
+        reyadeyat_log_add_log_to_list(__LINE__, __func__, __FILE_NAME__, reyadeyat_log_list_main, "Initializing Memory Module - Done - returning");
         return reyadeyat_memory_process;
     }
     return NULL;

@@ -26,9 +26,11 @@
  * @since 2023.04.01
  */
 
+#include "reyadeyat/reyadeyat.h"
+
 #include "external-utilities.0.0.0.h"
 
-void external_reyadeyat_utilities_number_to_char_v_0_0_0(char *input_number_type, const void *input_number, char* output_buffer, int *output_length) {
+void external_reyadeyat_utilities_number_to_char_v_0_0_0(char *input_number_type, const void *input_number, char* output_buffer, int *output_length, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
     int count = 1;
     int digit = 0;
     int number = *((int*)input_number);
