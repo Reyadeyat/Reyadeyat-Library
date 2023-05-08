@@ -50,7 +50,7 @@ void external_reyadeyat_memory_process_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_
     Reyadeyat_Log reyadeyat_log_memory_process[100];
     Reyadeyat_Log_List *reyadeyat_log_list_memory_process = &((Reyadeyat_Log_List){.size = 100, .cursor = 1, .log_list = reyadeyat_log_memory_process});
 
-    reyadeyat_log_add_log_to_list(__LINE__, __func__, __FILE_NAME__, reyadeyat_log_list_memory_process, "Reyadeyat Memory Process Log List Initiator");
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __MEMORY_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_memory_process, "Reyadeyat Memory Process Log List Initiator");
 
     internal_reyadeyat_memory_process_0_0_0(reyadeyat_memory_data, (void **) &abstract_data_structure_algorithm_mem_block, (sizeof *abstract_data_structure_algorithm_mem_block), (void **) &abstract_data_structure_block, (sizeof *abstract_data_structure_block), 100, reyadeyat_process, reyadeyat_log_list);
 
@@ -66,7 +66,7 @@ void external_reyadeyat_memory_process_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_
         count++;
     }
 
-    reyadeyat_log_add_log_to_list(__LINE__, __func__, __FILE_NAME__, reyadeyat_log_list_memory_process, "Reyadeyat Memory Process Log List End");
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __MEMORY_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_memory_process, "Reyadeyat Memory Process Log List End");
 
     for (int i = 0; i < reyadeyat_log_list_memory_process->cursor; i++) {
         Reyadeyat_Log reyadeyat_log = reyadeyat_log_list_memory_process->log_list[i];

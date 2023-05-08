@@ -127,11 +127,11 @@ void internal_reyadeyat_memory_process_0_0_0(Reyadeyat_Memory_Data *reyadeyat_me
         count++;
     }
 
-    reyadeyat_log_add_log_to_list(__LINE__, __func__, __FILE_NAME__, reyadeyat_log_list,
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __MEMORY_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list,
                                   "Reyadeyat Memory Process internal process version %s name %s buffer_size %u",
                                   reyadeyat_memory_data->version, reyadeyat_memory_data->name, reyadeyat_memory_data->buffer_size);
 
-    reyadeyat_log_add_log_to_list(__LINE__, __func__, __FILE_NAME__, reyadeyat_log_list, "Reyadeyat Memory Process Finished Initial Test");
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __MEMORY_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list, "Reyadeyat Memory Process Finished Initial Test");
 }
 
 

@@ -28,7 +28,7 @@
 
 #include "reyadeyat/reyadeyat.h"
 
-void reyadeyat_log_add_log_to_list(int line_number, const char *function_name, const char *file_name, Reyadeyat_Log_List *reyadeyat_log_list, const char* log_message, ...) {
+void reyadeyat_log_add_log_to_list(Reyadeyat_Log_Severity_Level severity_level, const char *module_name, const char *file_name, const char *function_name, int line_number, Reyadeyat_Log_List *reyadeyat_log_list, const char* log_message, ...) {
     char str[REYADEYAT_LOG_MESSAGE_LENGTH];
     va_list argument_list;
     va_start(argument_list, log_message);
@@ -41,7 +41,9 @@ void reyadeyat_log_add_log_to_list(int line_number, const char *function_name, c
         return;
     }
     Reyadeyat_Log *reyadeyat_log = &reyadeyat_log_list->log_list[reyadeyat_log_list->cursor++];
+    reyadeyat_log->severity_level = severity_level;
     reyadeyat_log->line_number = line_number;
+    memcpy(reyadeyat_log->module_name, module_name, MIN(REYADEYAT_LOG_MODULE_NAME_LENGTH, strlen(module_name)));
     memcpy(reyadeyat_log->function_name, function_name, MIN(REYADEYAT_LOG_FUNCTION_NAME_LENGTH, strlen(function_name)));
     memcpy(reyadeyat_log->file_name, file_name, MIN(REYADEYAT_LOG_FILE_NAME_LENGTH, strlen(file_name)));
     memcpy(reyadeyat_log->log_message, str, MIN(REYADEYAT_LOG_MESSAGE_LENGTH, strlen(str)));
@@ -50,7 +52,7 @@ void reyadeyat_log_add_log_to_list(int line_number, const char *function_name, c
 void reyadeyat_log_print_log_list(FILE *stream, Reyadeyat_Log_List *reyadeyat_log_list) {
     for (int i = 0; i < reyadeyat_log_list->cursor; i++) {
         Reyadeyat_Log reyadeyat_log = reyadeyat_log_list->log_list[i];
-        fprintf (stream, "Reyadeyat Memory log cursor = %d {.file_name = %s, .function_name = %s, .line_number = %d, .log_message=%s}\n",
-               i, reyadeyat_log.file_name, reyadeyat_log.function_name, reyadeyat_log.line_number, reyadeyat_log.log_message);
+        fprintf (stream, "Reyadeyat %s log cursor = %d {.file_name = %s, .function_name = %s, .line_number = %d, .log_message=%s}\n",
+                 reyadeyat_log.module_name, i, reyadeyat_log.file_name, reyadeyat_log.function_name, reyadeyat_log.line_number, reyadeyat_log.log_message);
     }
 }
