@@ -43,6 +43,6 @@ REYADEYAT_DATA_TYPE(Reyadeyat_Memory_Process) {
     void (*copy_file_page_to_file_page)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list);
 };
 
-extern Reyadeyat_Memory_Process* get_reyadeyat_memory_process(char* lib_path, char *version_number, Reyadeyat_Log_List *reyadeyat_log_list);
+extern Reyadeyat_Memory_Process* get_reyadeyat_memory_process(char* lib_path, char *version_number, Reyadeyat_Log_List *reyadeyat_log_list_main);
 
 #endif //REYADEYAT_MEMORY_H

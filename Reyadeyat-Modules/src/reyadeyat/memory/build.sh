@@ -27,7 +27,7 @@ echo "Installing ..."
 cmake --install $PROJECT_PATH/Reyadeyat-Modules/build/reyadeyat/memory --prefix=$PROJECT_PATH/Reyadeyat-Modules
 echo "Completed ..."
 
-if [ "${MODE,,}" = "LIBRARY" ]; then
+if [ "$MODE" = "LIBRARY" ]; then
   readelf -s $PROJECT_PATH/Reyadeyat-Modules/lib/reyadeyat-memory-lib.so
   objdump -T $PROJECT_PATH/Reyadeyat-Modules/lib/reyadeyat-memory-lib.so
 else

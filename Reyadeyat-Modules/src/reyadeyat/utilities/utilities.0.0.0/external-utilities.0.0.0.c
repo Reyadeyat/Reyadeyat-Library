@@ -31,6 +31,7 @@
 #include "external-utilities.0.0.0.h"
 
 void external_reyadeyat_utilities_number_to_char_v_0_0_0(char *input_number_type, const void *input_number, char* output_buffer, int *output_length, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __UTILITIES_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list, "function '%s' not implemented yet\n", __func__);
     int count = 1;
     int digit = 0;
     int number = *((int*)input_number);
