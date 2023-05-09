@@ -30,20 +30,20 @@
 
 #if MODE == LIBRARY
 
-extern Reyadeyat_Utilities_Process *get_reyadeyat_utilities_process(char *lib_path, char *version_number, Reyadeyat_Log_List *reyadeyat_log_list_main) {
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __UTILITIES_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_main, "Utilities Module MODE=LIBRARY loading version \"%s\" lib_path => %s", version_number, lib_path);
+extern Reyadeyat_Utilities_Module *load_reyadeyat_utilities_module(char *library_file_path, char *version_number, Reyadeyat_Process *reyadeyat_process) {
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __UTILITIES_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "Utilities Module MODE=LIBRARY loading version \"%s\" library_file_path => %s", version_number, library_file_path);
     if (strcmp(version_number, "0.0.0") == 0) {
-        strcat(lib_path, "/reyadeyat-utilities-lib.0.0.0.so");
-        printf("lib_path => %s\n", lib_path);
-        void *handle = dlopen(lib_path, RTLD_NOW);
+        strcat(library_file_path, "/reyadeyat-utilities-lib.0.0.0.so");
+        printf("library_file_path => %s\n", library_file_path);
+        void *handle = dlopen(library_file_path, RTLD_NOW);
         char *dl_error = dlerror();
         if (handle == NULL) {
-            reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __UTILITIES_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_main, "Utilities Module Error Loading lib version \"%s\" file '%s' => %s\n", version_number, lib_path, dl_error);
+            reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __UTILITIES_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "Utilities Module Error Loading lib version \"%s\" file '%s' => %s\n", version_number, library_file_path, dl_error);
             return NULL;
         }
-        Reyadeyat_Utilities_Process *reyadeyat_utilities_process = malloc(sizeof(Reyadeyat_Utilities_Process));
-        reyadeyat_utilities_process->number_to_char = dlsym(handle, "external_reyadeyat_utilities_number_to_char_v_0_0_0");
-        return reyadeyat_utilities_process;
+        Reyadeyat_Utilities_Module *reyadeyat_utilities_module = malloc(sizeof(Reyadeyat_Utilities_Module));
+        reyadeyat_utilities_module->number_to_char = dlsym(handle, "external_reyadeyat_utilities_number_to_char_v_0_0_0");
+        return reyadeyat_utilities_module;
     }
     return NULL;
 }
@@ -52,15 +52,15 @@ extern Reyadeyat_Utilities_Process *get_reyadeyat_utilities_process(char *lib_pa
 
 #include "reyadeyat/utilities/utilities.0.0.0/external-utilities.0.0.0.h"
 
-Reyadeyat_Utilities_Process *get_reyadeyat_utilities_process(char *lib_path, char *version_number, Reyadeyat_Log_List *reyadeyat_log_list_main) {
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __UTILITIES_MODULE__, __FILE_NAME__, __func__, __LINE__,reyadeyat_log_list_main, "Utilities Module Loading MODE=LIBRARY loading version \"%s\" lib_path => %s", version_number, lib_path);
+Reyadeyat_Utilities_Module *load_reyadeyat_utilities_module(char *library_file_path, char *version_number, Reyadeyat_Process *reyadeyat_process) {
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __UTILITIES_MODULE__, __FILE_NAME__, __func__, __LINE__,reyadeyat_process->log_list, "Utilities Module Loading MODE=LIBRARY loading version \"%s\" library_file_path => %s", version_number, library_file_path);
     printf("Mode INCLUDE defined %d\n", INCLUDE);
-    printf("get_reyadeyat_utilities_process lib_path => %s\n", lib_path);
+    printf("load_reyadeyat_utilities_module library_file_path => %s\n", library_file_path);
     if (strcmp(version_number, "0.0.0") == 0) {
-        Reyadeyat_Utilities_Process *reyadeyat_utilities_process = malloc(sizeof *reyadeyat_utilities_process);
-        reyadeyat_utilities_process->number_to_char = external_reyadeyat_utilities_number_to_char_v_0_0_0;
-        reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __UTILITIES_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_main, "Initializing Utilities Module - Done - returning");
-        return reyadeyat_utilities_process;
+        Reyadeyat_Utilities_Module *reyadeyat_utilities_module = malloc(sizeof *reyadeyat_utilities_module);
+        reyadeyat_utilities_module->number_to_char = external_reyadeyat_utilities_number_to_char_v_0_0_0;
+        reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __UTILITIES_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "Initializing Utilities Module - Done - returning");
+        return reyadeyat_utilities_module;
     }
     return NULL;
 }

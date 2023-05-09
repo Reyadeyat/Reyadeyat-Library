@@ -31,17 +31,17 @@
 #include "external-memory.0.0.0.h"
 #include "internal-memory.0.0.0.h"
 
-void external_reyadeyat_memory_construct_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
+void external_reyadeyat_memory_construct_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
     printf("Module A external construct version %s name %s buffer_size %u\n", reyadeyat_memory_data->version,
            reyadeyat_memory_data->name, reyadeyat_memory_data->buffer_size);
 }
 
-void external_reyadeyat_memory_destruct_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
+void external_reyadeyat_memory_destruct_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
     printf("Module A external destruct version %s name %s buffer_size %u\n", reyadeyat_memory_data->version,
            reyadeyat_memory_data->name, reyadeyat_memory_data->buffer_size);
 }
 
-void external_reyadeyat_memory_process_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
+void external_reyadeyat_memory_module_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
     printf("Module A external process version %s name %s buffer_size %u\n", reyadeyat_memory_data->version,
            reyadeyat_memory_data->name, reyadeyat_memory_data->buffer_size);
     Reyadeyat_Node_Sequence *abstract_data_structure_algorithm_mem_block = malloc((sizeof *abstract_data_structure_algorithm_mem_block));
@@ -50,9 +50,9 @@ void external_reyadeyat_memory_process_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_
     Reyadeyat_Log reyadeyat_log_memory_process[100];
     Reyadeyat_Log_List *reyadeyat_log_list_memory_process = &((Reyadeyat_Log_List){.size = 100, .cursor = 1, .log_list = reyadeyat_log_memory_process});
 
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __MEMORY_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_memory_process, "Reyadeyat Memory Process Log List Initiator");
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __MEMORY_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "Reyadeyat Memory Process Log List Initiator");
 
-    internal_reyadeyat_memory_process_0_0_0(reyadeyat_memory_data, (void **) &abstract_data_structure_algorithm_mem_block, (sizeof *abstract_data_structure_algorithm_mem_block), (void **) &abstract_data_structure_block, (sizeof *abstract_data_structure_block), 100, reyadeyat_process, reyadeyat_log_list);
+    internal_reyadeyat_memory_module_0_0_0(reyadeyat_memory_data, (void **) &abstract_data_structure_algorithm_mem_block, (sizeof *abstract_data_structure_algorithm_mem_block), (void **) &abstract_data_structure_block, (sizeof *abstract_data_structure_block), 100, reyadeyat_process);
 
     Reyadeyat_Node_Sequence *abstract_data_structure_algorithm = abstract_data_structure_algorithm_mem_block;
     int count = 0;
@@ -66,7 +66,7 @@ void external_reyadeyat_memory_process_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_
         count++;
     }
 
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __MEMORY_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_memory_process, "Reyadeyat Memory Process Log List End");
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __MEMORY_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "Reyadeyat Memory Process Log List End");
 
     for (int i = 0; i < reyadeyat_log_list_memory_process->cursor; i++) {
         Reyadeyat_Log reyadeyat_log = reyadeyat_log_list_memory_process->log_list[i];
@@ -75,35 +75,35 @@ void external_reyadeyat_memory_process_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_
     }
 }
 
-void external_reyadeyat_memory_create_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    internal_reyadeyat_memory_create_memory_page_v_0_0_0(reyadeyat_memory_data, reyadeyat_process, reyadeyat_log_list);
+void external_reyadeyat_memory_create_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
+    internal_reyadeyat_memory_create_memory_page_v_0_0_0(reyadeyat_memory_data, reyadeyat_process);
 }
 
-void external_reyadeyat_memory_init_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    internal_reyadeyat_memory_init_memory_page_v_0_0_0(reyadeyat_memory_data, reyadeyat_process, reyadeyat_log_list);
+void external_reyadeyat_memory_init_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
+    internal_reyadeyat_memory_init_memory_page_v_0_0_0(reyadeyat_memory_data, reyadeyat_process);
 }
 
-void external_reyadeyat_memory_fetch_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    internal_reyadeyat_memory_fetch_memory_page_v_0_0_0(reyadeyat_memory_data, reyadeyat_process, reyadeyat_log_list);
+void external_reyadeyat_memory_fetch_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
+    internal_reyadeyat_memory_fetch_memory_page_v_0_0_0(reyadeyat_memory_data, reyadeyat_process);
 }
 
-void external_reyadeyat_memory_claim_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    internal_reyadeyat_memory_claim_memory_page_v_0_0_0(reyadeyat_memory_data, reyadeyat_process, reyadeyat_log_list);
+void external_reyadeyat_memory_claim_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
+    internal_reyadeyat_memory_claim_memory_page_v_0_0_0(reyadeyat_memory_data, reyadeyat_process);
 }
 
-void external_reyadeyat_memory_copy_memory_page_to_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    internal_reyadeyat_memory_copy_memory_page_to_memory_page_v_0_0_0(reyadeyat_memory_data, reyadeyat_process, reyadeyat_log_list);
+void external_reyadeyat_memory_copy_memory_page_to_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
+    internal_reyadeyat_memory_copy_memory_page_to_memory_page_v_0_0_0(reyadeyat_memory_data, reyadeyat_process);
 }
 
-void external_reyadeyat_memory_copy_memory_page_to_file_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    internal_reyadeyat_memory_copy_memory_page_to_file_page_v_0_0_0(reyadeyat_memory_data, reyadeyat_process, reyadeyat_log_list);
+void external_reyadeyat_memory_copy_memory_page_to_file_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
+    internal_reyadeyat_memory_copy_memory_page_to_file_page_v_0_0_0(reyadeyat_memory_data, reyadeyat_process);
 }
 
-void external_reyadeyat_memory_copy_file_page_to_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    internal_reyadeyat_memory_copy_file_page_to_memory_page_v_0_0_0(reyadeyat_memory_data, reyadeyat_process, reyadeyat_log_list);
+void external_reyadeyat_memory_copy_file_page_to_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
+    internal_reyadeyat_memory_copy_file_page_to_memory_page_v_0_0_0(reyadeyat_memory_data, reyadeyat_process);
 }
 
-void external_reyadeyat_memory_copy_file_page_to_file_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    internal_reyadeyat_memory_copy_file_page_to_file_page_v_0_0_0(reyadeyat_memory_data, reyadeyat_process, reyadeyat_log_list);
+void external_reyadeyat_memory_copy_file_page_to_file_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
+    internal_reyadeyat_memory_copy_file_page_to_file_page_v_0_0_0(reyadeyat_memory_data, reyadeyat_process);
 }
 
