@@ -65,10 +65,17 @@ typedef struct Reyadeyat_Process Reyadeyat_Process;
 #define BUILD DEBUG
 #endif
 
-struct Reyadeyat_Process {
-    Reyadeyat_Utilities_Process *utilities_process;
-    Reyadeyat_File_Process *file_process;
-    Reyadeyat_Memory_Process *memory_process;
+REYADEYAT_DATA_TYPE(Reyadeyat_Kernel) {
+    Reyadeyat_Utilities_Module *utilities_module;
+    Reyadeyat_File_Module *file_module;
+    Reyadeyat_Memory_Module *memory_module;
 };
+
+REYADEYAT_DATA_TYPE(Reyadeyat_Process) {
+    Reyadeyat_Kernel *kernel;
+    Reyadeyat_Log_List *log_list;
+};
+
+
 
 #endif //REYADEYAT_H

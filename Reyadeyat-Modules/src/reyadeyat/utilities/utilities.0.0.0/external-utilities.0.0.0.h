@@ -29,7 +29,7 @@
 #ifndef REYADEYAT_EXTERNAL_UTILITIES_TOOLS_0_0_0_H
 #define REYADEYAT_EXTERNAL_UTILITIES_TOOLS_0_0_0_H
 
-void external_reyadeyat_utilities_number_to_char_v_0_0_0(char *input_number_type, const void *input_number, char* output_buffer, int *output_length, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list);
+void external_reyadeyat_utilities_number_to_char_v_0_0_0(char *input_number_type, const void *input_number, char* output_buffer, int *output_length, Reyadeyat_Process *reyadeyat_process);
 
 
 #endif //REYADEYAT_EXTERNAL_UTILITIES_TOOLS_0_0_0_H

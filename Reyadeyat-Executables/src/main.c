@@ -42,12 +42,12 @@ int memory_main(int argc, char **argv) {
     int lib_path_len = strlen(lib_path)+1;
 
     //Load Utilities Library
-    char utilities_lib_file[2048];
-    memcpy(utilities_lib_file, lib_path, lib_path_len+1);
-    char *utilities_lib_file_suffix = "/reyadeyat-utilities-lib.so";
-    strncpy(utilities_lib_file+lib_path_len-1, utilities_lib_file_suffix, strlen(utilities_lib_file_suffix));
-    printf ("Utilities Library loading file: %s\n", utilities_lib_file);
-    void* reyadeyat_utilities_module_library = dlopen(utilities_lib_file, RTLD_LAZY);
+    char utilities_library_file[2048];
+    memcpy(utilities_library_file, lib_path, lib_path_len+1);
+    char *utilities_library_file_suffix = "/reyadeyat-utilities-lib.so";
+    strncpy(utilities_library_file+lib_path_len-1, utilities_library_file_suffix, strlen(utilities_library_file_suffix));
+    printf ("Utilities Library loading file: %s\n", utilities_library_file);
+    void* reyadeyat_utilities_module_library = dlopen(utilities_library_file, RTLD_LAZY);
     dl_error = (char*) dlerror();
     if (reyadeyat_utilities_module_library == NULL) {
         printf("Error Loading lib file '%s' => %s\n", lib_path, dl_error);
@@ -55,12 +55,12 @@ int memory_main(int argc, char **argv) {
     }
 
     //Load File Library
-    char file_lib_file[2048];
-    memcpy(file_lib_file, lib_path, lib_path_len);
-    char *file_lib_file_suffix = "/reyadeyat-file-lib.so";
-    strncpy(file_lib_file+lib_path_len-1, file_lib_file_suffix, strlen(file_lib_file_suffix)+1);
-    printf ("File Library loading file: %s\n", file_lib_file);
-    void* reyadeyat_file_module_library = dlopen(file_lib_file, RTLD_LAZY);
+    char file_library_file[2048];
+    memcpy(file_library_file, lib_path, lib_path_len);
+    char *file_library_file_suffix = "/reyadeyat-file-lib.so";
+    strncpy(file_library_file+lib_path_len-1, file_library_file_suffix, strlen(file_library_file_suffix)+1);
+    printf ("File Library loading file: %s\n", file_library_file);
+    void* reyadeyat_file_module_library = dlopen(file_library_file, RTLD_LAZY);
     dl_error = (char*) dlerror();
     if (reyadeyat_file_module_library == NULL) {
         printf("Error Loading lib file '%s' => %s\n", lib_path, dl_error);
@@ -68,103 +68,105 @@ int memory_main(int argc, char **argv) {
     }
 
     //Load Memory Library
-    char memory_lib_file[2048];
-    memcpy(memory_lib_file, lib_path, lib_path_len);
-    char *memory_lib_file_suffix = "/reyadeyat-memory-lib.so";
-    strncpy(memory_lib_file+lib_path_len-1, memory_lib_file_suffix, strlen(memory_lib_file_suffix)+1);
-    printf ("Memory Library loading file: %s\n", memory_lib_file);
-    void* reyadeyat_memory_module_library = dlopen(memory_lib_file, RTLD_LAZY);
+    char memory_library_file[2048];
+    memcpy(memory_library_file, lib_path, lib_path_len);
+    char *memory_library_file_suffix = "/reyadeyat-memory-lib.so";
+    strncpy(memory_library_file+lib_path_len-1, memory_library_file_suffix, strlen(memory_library_file_suffix)+1);
+    printf ("Memory Library loading file: %s\n", memory_library_file);
+    void* reyadeyat_memory_module_library = dlopen(memory_library_file, RTLD_LAZY);
     dl_error = (char*) dlerror();
     if (reyadeyat_memory_module_library == NULL) {
         printf("Error Loading lib file '%s' => %s\n", lib_path, dl_error);
         return 1;
     }
 
-    Reyadeyat_Process reyadeyat_process;
-
     Reyadeyat_Log reyadeyat_log[100];
-    Reyadeyat_Log_List *reyadeyat_log_list_main = &((Reyadeyat_Log_List){.size = 10, .cursor = 1, .log_list = reyadeyat_log});
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_main, "Initializing Main Program");
+    //&((Reyadeyat_Log_List){.size = 100, .cursor = 1, .log_list = reyadeyat_log_memory_process});
+    Reyadeyat_Log_List reyadeyat_log_list = {.size = 10, .cursor = 1, .log_list = reyadeyat_log};
+    Reyadeyat_Kernel reyadeyat_kernel;
+    Reyadeyat_Process reyadeyat_process = {.kernel = &reyadeyat_kernel, .log_list = &reyadeyat_log_list};
+
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Initializing Main Program");
 
     FILE *stream = stdout;
 
     //Load Utilities Module
-    char utilities_library_dir_copy[1024];
+    char utilities_library_file_path[1024];
     char *utilities_library_version_number = "0.0.0";
-    memcpy(utilities_library_dir_copy, lib_path, lib_path_len);
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_main, "Loading Utilities Module start");
-    //Load Utilities Process
-    Reyadeyat_Utilities_Process* (*get_reyadeyat_utilities_process)(char *, char *, Reyadeyat_Log_List *) = dlsym(reyadeyat_utilities_module_library, "get_reyadeyat_utilities_process");
-    if (get_reyadeyat_utilities_process == NULL) {
-        printf ("Error loading function get_reyadeyat_utilities_process version \"%s\"\n", utilities_library_version_number);
-        reyadeyat_log_print_log_list(stream, reyadeyat_log_list_main);
+    memcpy(utilities_library_file_path, lib_path, lib_path_len);
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading Utilities Module start");
+    //Load Utilities Module Library
+    Reyadeyat_Utilities_Module* (*load_reyadeyat_utilities_module)(char *, char *, Reyadeyat_Process *) = dlsym(reyadeyat_utilities_module_library, "load_reyadeyat_utilities_module");
+    if (load_reyadeyat_utilities_module == NULL) {
+        printf ("Error loading function load_reyadeyat_utilities_module version \"%s\"\n", utilities_library_version_number);
+        reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
     }
-    printf ("Calling get_reyadeyat_utilities_process \"%s\" utilities_lib_dir_copy => %s\n", utilities_library_version_number, utilities_library_dir_copy);
-    reyadeyat_process.utilities_process = get_reyadeyat_utilities_process(utilities_library_dir_copy, utilities_library_version_number, reyadeyat_log_list_main);
-    if (reyadeyat_process.utilities_process == NULL) {
-        printf ("Failed running get_reyadeyat_utilities_process \"%s\" utilities_lib_dir_copy => %s\n", utilities_library_version_number, utilities_library_dir_copy);
-        reyadeyat_log_print_log_list(stream, reyadeyat_log_list_main);
+    printf ("Calling load_reyadeyat_utilities_module \"%s\" utilities_library_file_path => %s\n", utilities_library_version_number, utilities_library_file_path);
+    reyadeyat_process.kernel->utilities_module = load_reyadeyat_utilities_module(utilities_library_file_path, utilities_library_version_number, &reyadeyat_process);
+    if (reyadeyat_process.kernel->utilities_module == NULL) {
+        printf ("Failed running load_reyadeyat_utilities_module \"%s\" utilities_library_file_path => %s\n", utilities_library_version_number, utilities_library_file_path);
+        reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
         return 1;
     }
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_main, "Loading Utilities Module end");
-    reyadeyat_log_print_log_list(stream, reyadeyat_log_list_main);
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading Utilities Module end");
+    reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
 
     //Load File Module
-    char file_library_dir_copy[1024];
+    char file_library_file_path[1024];
     char *file_library_version_number = "0.0.0";
-    memcpy(file_library_dir_copy, lib_path, lib_path_len);
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_main, "Loading File Module start");
-    //Load File Process
-    Reyadeyat_File_Process* (*get_reyadeyat_file_process)(char *, char *, Reyadeyat_Log_List *) = dlsym(reyadeyat_file_module_library, "get_reyadeyat_file_process");
-    if (get_reyadeyat_file_process == NULL) {
-        printf ("Error loading function get_reyadeyat_file_process version \"%s\"\n", file_library_version_number);
-        reyadeyat_log_print_log_list(stream, reyadeyat_log_list_main);
+    memcpy(file_library_file_path, lib_path, lib_path_len);
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading File Module start");
+    //Load File Module Library
+    Reyadeyat_File_Module* (*load_reyadeyat_file_module)(char *, char *, Reyadeyat_Process *) = dlsym(reyadeyat_file_module_library, "load_reyadeyat_file_module");
+    if (load_reyadeyat_file_module == NULL) {
+        printf ("Error loading function load_reyadeyat_file_module version \"%s\"\n", file_library_version_number);
+        reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
     }
-    printf ("Calling get_reyadeyat_file_process \"%s\" file_lib_dir_copy => %s\n", file_library_version_number, file_library_dir_copy);
-    reyadeyat_process.file_process = get_reyadeyat_file_process(file_library_dir_copy, file_library_version_number, reyadeyat_log_list_main);
-    if (reyadeyat_process.file_process == NULL) {
-        printf ("Failed running get_reyadeyat_file_process \"%s\" file_library_dir_copy => %s\n", file_library_version_number, file_library_dir_copy);
-        reyadeyat_log_print_log_list(stream, reyadeyat_log_list_main);
+    printf ("Calling load_reyadeyat_file_module \"%s\" file_library_file_path => %s\n", file_library_version_number, file_library_file_path);
+    reyadeyat_process.kernel->file_module = load_reyadeyat_file_module(file_library_file_path, file_library_version_number, &reyadeyat_process);
+    if (reyadeyat_process.kernel->file_module == NULL) {
+        printf ("Failed running load_reyadeyat_file_module \"%s\" file_library_file_path => %s\n", file_library_version_number, file_library_file_path);
+        reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
         return 1;
     }
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_main, "Loading File Module end");
-    reyadeyat_log_print_log_list(stream, reyadeyat_log_list_main);
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading File Module end");
+    reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
 
     //Load Memory Module
-    char memory_library_dir_copy[1024];
+    char memory_library_file_path[1024];
     char *memory_library_version_number = "0.0.0";
-    memcpy(memory_library_dir_copy, lib_path, lib_path_len);
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_main, "Loading Memory Module start");
-    //Load Memory Process
-    Reyadeyat_Memory_Process* (*get_reyadeyat_memory_process)(char *, char *, Reyadeyat_Log_List *) = dlsym(reyadeyat_memory_module_library, "get_reyadeyat_memory_process");
-    if (get_reyadeyat_memory_process == NULL) {
-        printf ("Error loading function get_reyadeyat_memory_process version \"%s\"\n", memory_library_version_number);
-        reyadeyat_log_print_log_list(stream, reyadeyat_log_list_main);
+    memcpy(memory_library_file_path, lib_path, lib_path_len);
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading Memory Module start");
+    //Load Memory Module Library
+    Reyadeyat_Memory_Module* (*load_reyadeyat_memory_module)(char *, char *, Reyadeyat_Process *) = dlsym(reyadeyat_memory_module_library, "load_reyadeyat_memory_module");
+    if (load_reyadeyat_memory_module == NULL) {
+        printf ("Error loading function load_reyadeyat_memory_module version \"%s\"\n", memory_library_version_number);
+        reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
     }
-    printf ("Calling get_reyadeyat_memory_process \"%s\" memory_lib_dir_copy => %s\n", memory_library_version_number, memory_library_dir_copy);
-    reyadeyat_process.memory_process = get_reyadeyat_memory_process(memory_library_dir_copy, memory_library_version_number, reyadeyat_log_list_main);
-    if (reyadeyat_process.memory_process == NULL) {
-        printf ("Failed running get_reyadeyat_memory_process \"%s\" memory_lib_dir_copy => %s\n", memory_library_version_number, memory_library_dir_copy);
-        reyadeyat_log_print_log_list(stream, reyadeyat_log_list_main);
+    printf ("Calling load_reyadeyat_memory_module \"%s\" memory_library_file_path => %s\n", memory_library_version_number, memory_library_file_path);
+    reyadeyat_process.kernel->memory_module = load_reyadeyat_memory_module(memory_library_file_path, memory_library_version_number, &reyadeyat_process);
+    if (reyadeyat_process.kernel->memory_module == NULL) {
+        printf ("Failed running load_reyadeyat_memory_module \"%s\" memory_library_file_path => %s\n", memory_library_version_number, memory_library_file_path);
+        reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
         return 1;
     }
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_main, "Loading Memory Module end");
-    reyadeyat_log_print_log_list(stream, reyadeyat_log_list_main);
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading Memory Module end");
+    reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
 
     //Start Program Processing
     int number = 789542;
     char number_str[30];
     int number_str_length;
-    reyadeyat_process.utilities_process->number_to_char("integer", &number, number_str, &number_str_length, &reyadeyat_process, reyadeyat_log_list_main);
+    reyadeyat_process.kernel->utilities_module->number_to_char("integer", &number, number_str, &number_str_length, &reyadeyat_process);
     printf ("Calling reyadeyat_utilities_process_0_0_0 integer %d is '%s'\n", number, number_str);
 
     Reyadeyat_File_Data reyadeyat_file_data;
-    reyadeyat_process.file_process->close_memory_file(&reyadeyat_file_data, &reyadeyat_process, reyadeyat_log_list_main);
+    reyadeyat_process.kernel->file_module->close_memory_file(&reyadeyat_file_data, &reyadeyat_process);
 
     Reyadeyat_Memory_Data reyadeyat_memory_data_0_0_0 = {"0.0.0", "Reyadeyat_Memory_Data_0_0_0", 32};
-    reyadeyat_process.memory_process->process(&reyadeyat_memory_data_0_0_0, &reyadeyat_process, reyadeyat_log_list_main);
+    reyadeyat_process.kernel->memory_module->process(&reyadeyat_memory_data_0_0_0, &reyadeyat_process);
 
-    reyadeyat_process.memory_process->destruct(&reyadeyat_memory_data_0_0_0, &reyadeyat_process, reyadeyat_log_list_main);
+    reyadeyat_process.kernel->memory_module->destruct(&reyadeyat_memory_data_0_0_0, &reyadeyat_process);
 
     printf("Completed Successfully\n");
     return 0;
@@ -173,51 +175,54 @@ int memory_main(int argc, char **argv) {
 #elif MODE == INCLUDE
 
 int memory_main(int argc, char **argv) {
-    printf ("Calling get_reyadeyat_memory_process 0.0.0 from header file - INCLUDE\n");
-
-    Reyadeyat_Process reyadeyat_process;
+    printf ("Calling load_reyadeyat_memory_module 0.0.0 from header file - INCLUDE\n");
 
     Reyadeyat_Log reyadeyat_log[100];
-    Reyadeyat_Log_List *reyadeyat_log_list_main = &((Reyadeyat_Log_List){.size = 10, .cursor = 1, .log_list = reyadeyat_log});
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_main, "Initializing Main Program");
+    //&((Reyadeyat_Log_List){.size = 100, .cursor = 1, .log_list = reyadeyat_log_memory_process});
+    Reyadeyat_Log_List reyadeyat_log_list = {.size = 10, .cursor = 1, .log_list = reyadeyat_log};
+    Reyadeyat_Kernel reyadeyat_kernel;
+    Reyadeyat_Process reyadeyat_process = {.kernel = &reyadeyat_kernel, .log_list = &reyadeyat_log_list};
+
+
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Initializing Main Program");
 
     FILE *stream = stdout;
 
     //Load Utilities Module
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_main, "Loading Utilities Module start");
-    reyadeyat_process.utilities_process = get_reyadeyat_utilities_process("", "0.0.0", reyadeyat_log_list_main);
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_main, "Loading Utilities Module end");
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading Utilities Module start");
+    reyadeyat_process.kernel->utilities_module = load_reyadeyat_utilities_module("", "0.0.0", &reyadeyat_process);
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading Utilities Module end");
 
-    reyadeyat_log_print_log_list(stream, reyadeyat_log_list_main);
+    reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
 
     //Load File Module
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_main, "Loading File Module start");
-    reyadeyat_process.file_process = get_reyadeyat_file_process("", "0.0.0", reyadeyat_log_list_main);
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_main, "Loading File Module end");
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading File Module start");
+    reyadeyat_process.kernel->file_module = load_reyadeyat_file_module("", "0.0.0", &reyadeyat_process);
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading File Module end");
 
-    reyadeyat_log_print_log_list(stream, reyadeyat_log_list_main);
+    reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
 
     //Load Memory Module
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_main, "Loading Memory Module start");
-    reyadeyat_process.memory_process = get_reyadeyat_memory_process("", "0.0.0", reyadeyat_log_list_main);
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list_main, "Loading Memory Module end");
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading Memory Module start");
+    reyadeyat_process.kernel->memory_module = load_reyadeyat_memory_module("", "0.0.0", &reyadeyat_process);
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading Memory Module end");
 
-    reyadeyat_log_print_log_list(stream, reyadeyat_log_list_main);
+    reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
 
     //Start Program Processing
     int number = 789542;
     char number_str[30];
     int number_str_length;
-    reyadeyat_process.utilities_process->number_to_char("integer", &number, number_str, &number_str_length, &reyadeyat_process, reyadeyat_log_list_main);
+    reyadeyat_process.kernel->utilities_module->number_to_char("integer", &number, number_str, &number_str_length, &reyadeyat_process);
     printf ("Calling reyadeyat_utilities_process_0_0_0 integer %d is '%s'\n", number, number_str);
 
     Reyadeyat_File_Data reyadeyat_file_data;
-    reyadeyat_process.file_process->close_memory_file(&reyadeyat_file_data, &reyadeyat_process, reyadeyat_log_list_main);
+    reyadeyat_process.kernel->file_module->close_memory_file(&reyadeyat_file_data, &reyadeyat_process);
 
     Reyadeyat_Memory_Data reyadeyat_memory_data_0_0_0 = {"0.0.0", "Reyadeyat_Memory_Data_0_0_0", 32};
-    reyadeyat_process.memory_process->process(&reyadeyat_memory_data_0_0_0, &reyadeyat_process, reyadeyat_log_list_main);
+    reyadeyat_process.kernel->memory_module->process(&reyadeyat_memory_data_0_0_0, &reyadeyat_process);
 
-    reyadeyat_process.memory_process->destruct(&reyadeyat_memory_data_0_0_0, &reyadeyat_process, reyadeyat_log_list_main);
+    reyadeyat_process.kernel->memory_module->destruct(&reyadeyat_memory_data_0_0_0, &reyadeyat_process);
 
     printf("Completed Successfully\n");
     return 0;

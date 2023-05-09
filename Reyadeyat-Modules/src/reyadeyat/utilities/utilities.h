@@ -29,10 +29,10 @@
 #ifndef REYADEYAT_UTILITIES_H
 #define REYADEYAT_UTILITIES_H
 
-REYADEYAT_DATA_TYPE(Reyadeyat_Utilities_Process) {
-    void (*number_to_char)(char *input_number_type, const void *input_number, char* output_buffer, int *output_length, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list);
+REYADEYAT_DATA_TYPE(Reyadeyat_Utilities_Module) {
+    void (*number_to_char)(char *input_number_type, const void *input_number, char* output_buffer, int *output_length, Reyadeyat_Process *reyadeyat_process);
 };
 
-extern Reyadeyat_Utilities_Process *get_reyadeyat_utilities_process(char *lib_path, char *version_number, Reyadeyat_Log_List *reyadeyat_log_list_main);
+extern Reyadeyat_Utilities_Module *load_reyadeyat_utilities_module(char *library_file_path, char *version_number, Reyadeyat_Process *reyadeyat_process);
 
 #endif //REYADEYAT_UTILITIES_H

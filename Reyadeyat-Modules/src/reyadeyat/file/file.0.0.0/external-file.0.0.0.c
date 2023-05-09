@@ -31,18 +31,18 @@
 #include "external-file.0.0.0.h"
 #include "internal-file.0.0.0.h"
 
-void external_reyadeyat_file_create_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    internal_reyadeyat_file_create_memory_file_v_0_0_0(reyadeyat_file_data, reyadeyat_process, reyadeyat_log_list);
+void external_reyadeyat_file_create_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process) {
+    internal_reyadeyat_file_create_memory_file_v_0_0_0(reyadeyat_file_data, reyadeyat_process);
 }
 
-void external_reyadeyat_file_copy_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    internal_reyadeyat_file_copy_memory_file_v_0_0_0(reyadeyat_file_data, reyadeyat_process, reyadeyat_log_list);
+void external_reyadeyat_file_copy_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process) {
+    internal_reyadeyat_file_copy_memory_file_v_0_0_0(reyadeyat_file_data, reyadeyat_process);
 }
 
-void external_reyadeyat_file_save_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    internal_reyadeyat_file_save_memory_file_v_0_0_0(reyadeyat_file_data, reyadeyat_process, reyadeyat_log_list);
+void external_reyadeyat_file_save_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process) {
+    internal_reyadeyat_file_save_memory_file_v_0_0_0(reyadeyat_file_data, reyadeyat_process);
 }
 
-void external_reyadeyat_file_close_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    internal_reyadeyat_file_close_memory_file_v_0_0_0(reyadeyat_file_data, reyadeyat_process, reyadeyat_log_list);
+void external_reyadeyat_file_close_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process) {
+    internal_reyadeyat_file_close_memory_file_v_0_0_0(reyadeyat_file_data, reyadeyat_process);
 }

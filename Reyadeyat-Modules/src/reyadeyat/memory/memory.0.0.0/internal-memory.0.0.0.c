@@ -30,7 +30,7 @@
 
 #include "internal-memory.0.0.0.h"
 
-void internal_reyadeyat_memory_process_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, void **abstract_data_structure_algorithm_mem_block, int abstract_data_structure_algorithm_mem_block_struct_length, void **abstract_data_structure_block, int abstract_data_structure_block_length, int size, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
+void internal_reyadeyat_memory_module_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, void **abstract_data_structure_algorithm_mem_block, int abstract_data_structure_algorithm_mem_block_struct_length, void **abstract_data_structure_block, int abstract_data_structure_block_length, int size, Reyadeyat_Process *reyadeyat_process) {
     //Abstract Data Structure Algorithm Memory Block
     //Reyadeyat_Node_Sequence *abstract_data_structure_algorithm_mem_block = malloc((sizeof *abstract_data_structure_algorithm_mem_block) * 100);
     *abstract_data_structure_algorithm_mem_block = malloc(abstract_data_structure_algorithm_mem_block_struct_length * size);
@@ -88,7 +88,7 @@ void internal_reyadeyat_memory_process_0_0_0(Reyadeyat_Memory_Data *reyadeyat_me
         reyadeyat_structure_pointer->buffer_1->size = 10;
         reyadeyat_structure_pointer->buffer_1->buffer = (char*)(data_buffer_1+pointer_address_1+sizeof(Reyadeyat_Buffer));
         number = i*10;
-        reyadeyat_process->utilities_process->number_to_char("integer", &number, output_buffer, &reyadeyat_structure_pointer->buffer_1->size, reyadeyat_process, reyadeyat_log_list);
+        reyadeyat_process->kernel->utilities_module->number_to_char("integer", &number, output_buffer, &reyadeyat_structure_pointer->buffer_1->size, reyadeyat_process);
         memcpy(reyadeyat_structure_pointer->buffer_1->buffer, output_buffer, reyadeyat_structure_pointer->buffer_1->size);
         printf("data_buffer_1[%d] size=%lu - reyadeyat_structure[%d].buffer_1='%.*s'\n", i, pointer_address_1, i, reyadeyat_structure_pointer->buffer_1->size, reyadeyat_structure_pointer->buffer_1->buffer);
 
@@ -97,7 +97,7 @@ void internal_reyadeyat_memory_process_0_0_0(Reyadeyat_Memory_Data *reyadeyat_me
         reyadeyat_structure_pointer->buffer_2->size = 100;
         reyadeyat_structure_pointer->buffer_2->buffer = (char*)(data_buffer_2+pointer_address_2+sizeof(Reyadeyat_Buffer));
         number = i*100;
-        reyadeyat_process->utilities_process->number_to_char("integer", &number, output_buffer, &reyadeyat_structure_pointer->buffer_2->size, reyadeyat_process, reyadeyat_log_list);
+        reyadeyat_process->kernel->utilities_module->number_to_char("integer", &number, output_buffer, &reyadeyat_structure_pointer->buffer_2->size, reyadeyat_process);
         memcpy(reyadeyat_structure_pointer->buffer_2->buffer, output_buffer, reyadeyat_structure_pointer->buffer_2->size);
         printf("data_buffer_2[%d] size=%lu - reyadeyat_structure[%d].buffer_2='%.*s'\n", i, pointer_address_2, i, reyadeyat_structure_pointer->buffer_2->size, reyadeyat_structure_pointer->buffer_2->buffer);
 
@@ -106,7 +106,7 @@ void internal_reyadeyat_memory_process_0_0_0(Reyadeyat_Memory_Data *reyadeyat_me
         reyadeyat_structure_pointer->buffer_3->size = 1000;
         reyadeyat_structure_pointer->buffer_3->buffer = (char*)(data_buffer_3+pointer_address_3+sizeof(Reyadeyat_Buffer));
         number = i*1000;
-        reyadeyat_process->utilities_process->number_to_char("integer", &number, output_buffer, &reyadeyat_structure_pointer->buffer_3->size, reyadeyat_process, reyadeyat_log_list);
+        reyadeyat_process->kernel->utilities_module->number_to_char("integer", &number, output_buffer, &reyadeyat_structure_pointer->buffer_3->size, reyadeyat_process);
         memcpy(reyadeyat_structure_pointer->buffer_3->buffer, output_buffer, reyadeyat_structure_pointer->buffer_3->size);
         printf("data_buffer_3[%d] size=%lu - reyadeyat_structure[%d].buffer_3='%.*s'\n", i, pointer_address_3, i, reyadeyat_structure_pointer->buffer_3->size, reyadeyat_structure_pointer->buffer_3->buffer);
     }
@@ -127,44 +127,44 @@ void internal_reyadeyat_memory_process_0_0_0(Reyadeyat_Memory_Data *reyadeyat_me
         count++;
     }
 
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __MEMORY_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list,
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __FILE_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list,
                                   "Reyadeyat Memory Process internal process version %s name %s buffer_size %u",
                                   reyadeyat_memory_data->version, reyadeyat_memory_data->name, reyadeyat_memory_data->buffer_size);
 
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __MEMORY_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_log_list, "Reyadeyat Memory Process Finished Initial Test");
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __MEMORY_MODULE__, __FILE_NAME__, __func__, __LINE__,reyadeyat_process->log_list, "Reyadeyat Memory Process Finished Initial Test");
 }
 
 
-void internal_reyadeyat_memory_create_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    printf("function '%s' not implemented yet\n", __func__);
+void internal_reyadeyat_memory_create_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __FILE_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "function '%s' not implemented yet", __func__);
 }
 
-void internal_reyadeyat_memory_init_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    printf("function '%s' not implemented yet\n", __func__);
+void internal_reyadeyat_memory_init_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __FILE_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "function '%s' not implemented yet", __func__);
 }
 
-void internal_reyadeyat_memory_fetch_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    printf("function '%s' not implemented yet\n", __func__);
+void internal_reyadeyat_memory_fetch_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __FILE_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "function '%s' not implemented yet", __func__);
 }
 
-void internal_reyadeyat_memory_claim_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    printf("function '%s' not implemented yet\n", __func__);
+void internal_reyadeyat_memory_claim_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __FILE_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "function '%s' not implemented yet", __func__);
 }
 
-void internal_reyadeyat_memory_copy_memory_page_to_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    printf("function '%s' not implemented yet\n", __func__);
+void internal_reyadeyat_memory_copy_memory_page_to_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __FILE_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "function '%s' not implemented yet", __func__);
 }
 
-void internal_reyadeyat_memory_copy_memory_page_to_file_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    printf("function '%s' not implemented yet\n", __func__);
+void internal_reyadeyat_memory_copy_memory_page_to_file_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __FILE_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "function '%s' not implemented yet", __func__);
 }
 
-void internal_reyadeyat_memory_copy_file_page_to_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    printf("function '%s' not implemented yet\n", __func__);
+void internal_reyadeyat_memory_copy_file_page_to_memory_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __FILE_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "function '%s' not implemented yet", __func__);
 }
 
-void internal_reyadeyat_memory_copy_file_page_to_file_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list) {
-    printf("function '%s' not implemented yet\n", __func__);
+void internal_reyadeyat_memory_copy_file_page_to_file_page_v_0_0_0(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process) {
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __FILE_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "function '%s' not implemented yet", __func__);
 }
 
 

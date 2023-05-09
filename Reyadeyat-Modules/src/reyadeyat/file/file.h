@@ -29,13 +29,13 @@
 #ifndef REYADEYAT_FILE_H
 #define REYADEYAT_FILE_H
 
-REYADEYAT_DATA_TYPE(Reyadeyat_File_Process) {
-    void (*create_memory_file)(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list);
-    void (*copy_memory_file)(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list);
-    void (*save_memory_file)(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list);
-    void (*close_memory_file)(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process, Reyadeyat_Log_List *reyadeyat_log_list);
+REYADEYAT_DATA_TYPE(Reyadeyat_File_Module) {
+    void (*create_memory_file)(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process);
+    void (*copy_memory_file)(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process);
+    void (*save_memory_file)(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process);
+    void (*close_memory_file)(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process);
 };
 
-extern Reyadeyat_File_Process* get_reyadeyat_file_process(char* lib_path, char *version_number, Reyadeyat_Log_List *reyadeyat_log_list_main);
+extern Reyadeyat_File_Module* load_reyadeyat_file_module(char* library_file_path, char *version_number, Reyadeyat_Process *reyadeyat_process);
 
 #endif //REYADEYAT_FILE_H
