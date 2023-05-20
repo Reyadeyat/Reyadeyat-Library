@@ -29,6 +29,7 @@
 #ifndef REYADEYAT_H
 #define REYADEYAT_H
 
+#include <signal.h>
 #include <stdlib.h>
 #include <dlfcn.h>
 #include <stdint.h>

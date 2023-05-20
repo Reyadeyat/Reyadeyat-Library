@@ -17,6 +17,10 @@ echo "Completed ..."
 echo "Finished $PROJECT_PATH/Reyadeyat-Executables/bin/reyadeyat-c"
 read -p "Run Program? (y/n) " CHOICE
 if [ "$CHOICE" = "y" ] || [ "$CHOICE" = "yes" ]; then
+  read -p "Clear consol? " CHOICE
+  if [ "$CHOICE" = "y" ] || [ "$CHOICE" = "yes" ]; then
+    clear
+  fi
   echo "Done, Programm is now running ..."
   $PROJECT_PATH/Reyadeyat-Executables/bin/reyadeyat-c
   echo "Done, Programm has finished executing ..."
