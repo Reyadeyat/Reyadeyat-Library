@@ -1,56 +1,65 @@
 #! /bin/sh
 
-if [ -z "$1" ] || [ "${1,,}" = "default" ]; then
-  echo "Setting default MODE = INCLUDE and BUILD = DEBUG parameters [MODE { LIBRARY, INCLUDE }, BUILD { DEBUG, RELEASE }]"
-  DEFAULT_MODE="INCLUDE"
-  DEFAULT_BUILD="DEBUG"
-else
-  if [ -z "$1" ]; then
-    echo "Pass MODE { LIBRARY, INCLUDE }"
-    exit 1
-  fi
-  if [ -z "$2" ]; then
-    echo "Pass BUILD { DEBUG, RELEASE }"
-    exit 1
-  fi
-  DEFAULT_MODE="$1"
-  DEFAULT_BUILD="$2"
+echo "Running Main script $(realpath "$0")"
+
+PROJECT_PATH=$(pwd)
+echo "Current Build Path $PROJECT_PATH"
+source $PROJECT_PATH/build-main-validate.sh
+returned_code=$?
+
+if [ $returned_code = 1 ]; then
+  echo "build-main-validate.sh failed, exit..."
+  exit 1;
 fi
 
 MODE=$DEFAULT_MODE
 BUILD=$DEFAULT_BUILD
 
-PROJECT_PATH=$(pwd)
-
 clear
 pwd
 echo "-----------------------------------------------------------------------------------"
+
+#CMAKE_C_COMPILER="/usr/bin/clang"
+CMAKE_C_COMPILER="/usr/bin/gcc"
+if [ $BUILD == "DEBUG" ]; then
+    CMAKE_C_FLAGS="-g -Wall -Werror -fPIC -fstack-protector --save-temps"
+    CMAKE_C_FLAGS_DEBUG="-g"
+else
+    CMAKE_C_FLAGS="-Wall -Werror -fPIC -O2 -fstack-protector --save-temps"
+    CMAKE_C_FLAGS_MINSIZEREL="-Os -DNDEBUG"
+    CMAKE_C_FLAGS_RELEASE="-O2 -DNDEBUG"
+    CMAKE_C_FLAGS_RELWITHDEBINFO="-O2 -g"
+fi
 
 #Reyadeyat-Library
 echo "Building Reyadeyat-Library MODE = $MODE - BUILD = $BUILD - PROJECT_PATH = $PROJECT_PATH"
 
 #Reyadeyat-Modules
-echo "Building Reyadeyat Modules"
+echo "Cleaning Reyadeyat-Module"
+rm -rf $PROJECT_PATH/Reyadeyat-Module/build
+rm -rf $PROJECT_PATH/Reyadeyat-Module/lib
+
+echo "Building Reyadeyat Modules compiler"
 
 #File Module
+
 echo "Building Reyadeyat Modules - File 0.0.0"
-$PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/file/file.0.0.0/build.sh $MODE $BUILD $PROJECT_PATH
+source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/file/file.0.0.0/build.sh
 echo "Building Reyadeyat Modules - File API"
-$PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/file/build.sh $MODE $BUILD $PROJECT_PATH
+source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/file/build.sh
 
 #Memory Module
 echo "Building Reyadeyat Modules - Memory 0.0.0"
-$PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/memory/memory.0.0.0/build.sh $MODE $BUILD $PROJECT_PATH
+source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/memory/memory.0.0.0/build.sh
 echo "Building Reyadeyat Modules - Memory API"
-$PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/memory/build.sh $MODE $BUILD $PROJECT_PATH
+source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/memory/build.sh
 
 #Utilities Module
 echo "Building Reyadeyat Modules - Utilities 0.0.0"
-$PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/utilities/utilities.0.0.0/build.sh $MODE $BUILD $PROJECT_PATH
+source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/utilities/utilities.0.0.0/build.sh
 echo "Building Reyadeyat Modules - Utilities API"
-$PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/utilities/build.sh $MODE $BUILD $PROJECT_PATH
+source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/utilities/build.sh
 
 #Executables
 echo "Building Reyadeyat-Executables"
-
-$PROJECT_PATH/Reyadeyat-Executables/src/build.sh $MODE $BUILD $PROJECT_PATH
+source $PROJECT_PATH/Reyadeyat-Executables/src/build.sh

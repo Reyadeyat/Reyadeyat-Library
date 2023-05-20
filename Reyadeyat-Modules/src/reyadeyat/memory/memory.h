@@ -33,6 +33,7 @@ REYADEYAT_DATA_TYPE(Reyadeyat_Memory_Module) {
     void (*construct)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process);
     void (*destruct)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process);
     void (*process)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process);
+    void (*create_memory_book)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process);
     void (*create_memory_page)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process);
     void (*init_memory_page)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process);
     void (*fetch_memory_page)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process);
@@ -41,6 +42,8 @@ REYADEYAT_DATA_TYPE(Reyadeyat_Memory_Module) {
     void (*copy_memory_page_to_file_page)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process);
     void (*copy_file_page_to_memory_page)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process);
     void (*copy_file_page_to_file_page)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process);
+    void (*flush_memory_page)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process);
+    void (*flush_memory_book)(Reyadeyat_Memory_Data *reyadeyat_memory_data, Reyadeyat_Process *reyadeyat_process);
 };
 
 extern Reyadeyat_Memory_Module* load_reyadeyat_memory_module(char* library_file_path, char *version_number, Reyadeyat_Process *reyadeyat_process);
