@@ -175,7 +175,7 @@ int memory_main(int argc, char **argv) {
 #elif MODE == INCLUDE
 
 int memory_main(int argc, char **argv) {
-    printf ("Calling load_reyadeyat_memory_module 0.0.0 from header file - INCLUDE\n");
+    printf("Calling load_reyadeyat_memory_module 0.0.0 from header file - INCLUDE\n");
 
     Reyadeyat_Log reyadeyat_log[100];
     //&((Reyadeyat_Log_List){.size = 100, .cursor = 1, .log_list = reyadeyat_log_memory_process});
@@ -184,28 +184,35 @@ int memory_main(int argc, char **argv) {
     Reyadeyat_Process reyadeyat_process = {.kernel = &reyadeyat_kernel, .log_list = &reyadeyat_log_list};
 
 
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Initializing Main Program");
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__,
+                                  reyadeyat_process.log_list, "Initializing Main Program");
 
     FILE *stream = stdout;
 
     //Load Utilities Module
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading Utilities Module start");
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__,
+                                  reyadeyat_process.log_list, "Loading Utilities Module start");
     reyadeyat_process.kernel->utilities_module = load_reyadeyat_utilities_module("", "0.0.0", &reyadeyat_process);
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading Utilities Module end");
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__,
+                                  reyadeyat_process.log_list, "Loading Utilities Module end");
 
     reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
 
     //Load File Module
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading File Module start");
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__,
+                                  reyadeyat_process.log_list, "Loading File Module start");
     reyadeyat_process.kernel->file_module = load_reyadeyat_file_module("", "0.0.0", &reyadeyat_process);
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading File Module end");
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__,
+                                  reyadeyat_process.log_list, "Loading File Module end");
 
     reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
 
     //Load Memory Module
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading Memory Module start");
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__,
+                                  reyadeyat_process.log_list, "Loading Memory Module start");
     reyadeyat_process.kernel->memory_module = load_reyadeyat_memory_module("", "0.0.0", &reyadeyat_process);
-    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading Memory Module end");
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__,
+                                  reyadeyat_process.log_list, "Loading Memory Module end");
 
     reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
 
@@ -213,8 +220,9 @@ int memory_main(int argc, char **argv) {
     int number = 789542;
     char number_str[30];
     int number_str_length;
-    reyadeyat_process.kernel->utilities_module->number_to_char("integer", &number, number_str, &number_str_length, &reyadeyat_process);
-    printf ("Calling reyadeyat_utilities_process_0_0_0 integer %d is '%s'\n", number, number_str);
+    reyadeyat_process.kernel->utilities_module->number_to_char("integer", &number, number_str, &number_str_length,
+                                                               &reyadeyat_process);
+    printf("Calling reyadeyat_utilities_process_0_0_0 integer %d is '%s'\n", number, number_str);
 
     Reyadeyat_File_Data reyadeyat_file_data;
     reyadeyat_process.kernel->file_module->close_memory_file(&reyadeyat_file_data, &reyadeyat_process);
@@ -231,9 +239,192 @@ int memory_main(int argc, char **argv) {
 #endif
 
 
+static int continue_main_loop = 1;
 
+void linux_console_signal_handler(int signal) {
+    /* ISO C99 signals.  */
+    if (signal == SIGINT) {
+        printf("Caught signal SIGINT - Interactive attention signal.\n");
+        printf("Terminate Program? (y|n)\n");
+        char str[10];
+        if (fgets(str, 10, stdin) == NULL) {
+            printf("Error reading from console stdin\n");
+        }
+        printf("Selected Choice %c\n", str[0]);
+        if (str[0] == 'y') {
+            continue_main_loop = 0;
+        }
+    }
+    if (signal == SIGILL) {
+        printf("Caught signal SIGILL - Illegal instruction.\n");
+    }
+    if (signal == SIGABRT) {
+        printf("Caught signal SIGABRT - Abnormal termination.\n");
+    }
+    if (signal == SIGFPE) {
+        printf("Caught signal SIGFPE - Erroneous arithmetic operation.\n");
+    }
+
+    /* Historical signals specified by POSIX. */
+    if (signal == SIGSEGV) {
+        printf("Caught signal SIGSEGV - Invalid access to storage.\n");
+    }
+    if (signal == SIGTERM) {
+        printf("Caught signal SIGTERM - Termination request.\n");
+    }
+    if (signal == SIGHUP) {
+        printf("Caught signal SIGHUP - Hangup.\n");
+    }
+    if (signal == SIGQUIT) {
+        printf("Caught signal SIGQUIT - Quit.\n");
+    }
+    if (signal == SIGTRAP) {
+        printf("Caught signal SIGTRAP - Trace/breakpoint trap.\n");
+    }
+    if (signal == SIGKILL) {
+        printf("Caught signal SIGKILL - Killed.\n");
+    }
+    if (signal == SIGPIPE) {
+        printf("Caught signal SIGPIPE - Broken pipe.\n");
+    }
+    if (signal == SIGALRM) {
+        printf("Caught signal SIGALRM - Alarm clock.\n");
+    }
+}
+
+void register_signal_handler(__sighandler_t **err_ret) {
+
+    /*struct sigaction sigIntHandler;
+    sigIntHandler.sa_handler = linux_console_signal_handler;
+    sigemptyset(&sigIntHandler.sa_mask);
+    sigIntHandler.sa_flags = 0;
+    sigaction(SIGINT, &sigIntHandler, NULL);*/
+
+    /* ISO C99 signals.  */
+    /* Interactive attention signal.  */
+    **err_ret = signal(SIGINT, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGINT'\n"); }
+    /* Illegal instruction.  */
+    **err_ret = signal(SIGILL, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGILL'\n"); }
+    /* Abnormal termination.  */
+    **err_ret = signal(SIGABRT, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGABRT'\n"); }
+    /* Erroneous arithmetic operation.  */
+    **err_ret = signal(SIGFPE, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGFPE'\n"); }
+    /* Invalid access to storage.  */
+    **err_ret = signal(SIGSEGV, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGSEGV'\n"); }
+    /* Termination request.  */
+    **err_ret = signal(SIGTERM, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGTERM'\n"); }
+
+    /* Historical signals specified by POSIX. */
+    /* Hangup.  */
+    **err_ret = signal(SIGHUP, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGHUP'\n"); }
+    /* Quit.  */
+    **err_ret = signal(SIGQUIT, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGQUIT'\n"); }
+    /* Trace/breakpoint trap.  */
+    **err_ret = signal(SIGTRAP, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGTRAP'\n"); }
+    /* Killed.  */
+    //**err_ret = signal(SIGKILL, linux_console_signal_handler);
+    //if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGKILL'\n"); }
+    /* Broken pipe.  */
+    **err_ret = signal(SIGPIPE, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGPIPE'\n"); }
+    /* Alarm clock.  */
+    **err_ret = signal(SIGALRM, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGALRM'\n"); }
+
+    /* Adjustments and additions to the signal number constants for most Linux systems.  */
+    /* Stack fault (obsolete).  */
+    **err_ret = signal(SIGSTKFLT, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGSTKFLT'\n"); }
+    /* Power failure imminent.  */
+    **err_ret = signal(SIGPWR, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGPWR'\n"); }
+
+    /* Historical signals specified by POSIX. */
+    /* Bus error.  */
+    **err_ret = signal(SIGBUS, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGBUS'\n"); }
+    /* Bad system call.  */
+    **err_ret = signal(SIGSYS, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGSYS'\n"); }
+
+    /* New(er) POSIX signals (1003.1-2008, 1003.1-2013).  */
+    /* Urgent data is available at a socket.  */
+    **err_ret = signal(SIGURG, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGURG'\n"); }
+    /* Stop, unblockable.  */
+    //**err_ret = signal(SIGSTOP, linux_console_signal_handler);
+    //if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGSTOP'\n"); }
+    /* Keyboard stop.  */
+    **err_ret = signal(SIGTSTP, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGTSTP'\n"); }
+    /* Continue.  */
+    **err_ret = signal(SIGCONT, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGCONT'\n"); }
+    /* Child terminated or stopped.  */
+    **err_ret = signal(SIGCHLD, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGCHLD'\n"); }
+    /* Background read from control terminal.  */
+    **err_ret = signal(SIGTTIN, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGTTIN'\n"); }
+    /* Background write to control terminal.  */
+    **err_ret = signal(SIGTTOU, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGTTOU'\n"); }
+    /* Pollable event occurred (System V).  */
+    **err_ret = signal(SIGPOLL, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGPOLL'\n"); }
+    /* File size limit exceeded.  */
+    **err_ret = signal(SIGXFSZ, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGXFSZ'\n"); }
+    /* CPU time limit exceeded.  */
+    **err_ret = signal(SIGXCPU, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGXCPU'\n"); }
+    /* Virtual timer expired.  */
+    **err_ret = signal(SIGVTALRM, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGVTALRM'\n"); }
+    /* Profiling timer expired.  */
+    **err_ret = signal(SIGPROF, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGPROF'\n"); }
+    /* User-defined signal 1.  */
+    **err_ret = signal(SIGUSR1, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGUSR1'\n"); }
+    /* User-defined signal 2.  */
+    **err_ret = signal(SIGUSR2, linux_console_signal_handler);
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGUSR2'\n"); }
+
+    /* Nonstandard signals found in all modern POSIX systems (including both BSD and Linux).  */
+    **err_ret = signal(SIGWINCH, linux_console_signal_handler);/* Window size change (4.3 BSD, Sun).  */
+    if (**err_ret == SIG_ERR) { printf("Can't register signal handler 'SIGWINCH'\n"); }
+}
 
 int main(int argc, char **argv) {
-    memory_main(argc, argv);
+
+    __sighandler_t *err_ret = (__sighandler_t *) malloc(sizeof(__sighandler_t));
+    register_signal_handler(&err_ret);
+    if (*err_ret != NULL) {
+        printf("Can't register signal handlers exit\n");
+        return 1;
+    }
+
+    int ret = memory_main(argc, argv);
+    if (ret != 0) {
+        printf("Programm memory_main returned '%d'\n", ret);
+    }
+
+    printf("Start Main Loop\n");
+    while (continue_main_loop);
+    printf("End Main Loop\n");
+
+    printf("Exit Main Process\n");
+
+    return 0;
 }
 
