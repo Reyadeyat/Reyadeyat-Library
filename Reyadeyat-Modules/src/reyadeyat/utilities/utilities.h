@@ -31,6 +31,8 @@
 
 REYADEYAT_DATA_TYPE(Reyadeyat_Utilities_Module) {
     void (*number_to_char)(char *input_number_type, const void *input_number, char* output_buffer, int *output_length, Reyadeyat_Process *reyadeyat_process);
+    void (*is_little_endian)(int *is_little_endin);
+    void (*is_big_endian)(int *is_big_endin);
 };
 
 extern Reyadeyat_Utilities_Module *load_reyadeyat_utilities_module(char *library_file_path, char *version_number, Reyadeyat_Process *reyadeyat_process);

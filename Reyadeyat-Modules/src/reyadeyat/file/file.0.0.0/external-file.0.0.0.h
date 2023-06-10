@@ -34,5 +34,4 @@ extern void external_reyadeyat_file_copy_memory_file_v_0_0_0(Reyadeyat_File_Data
 extern void external_reyadeyat_file_save_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process);
 extern void external_reyadeyat_file_close_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process);
 
-
 #endif //REYADEYAT_EXTERNAL_FILE_0_0_0_H
