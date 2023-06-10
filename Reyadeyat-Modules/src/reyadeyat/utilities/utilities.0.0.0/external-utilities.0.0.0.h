@@ -29,7 +29,10 @@
 #ifndef REYADEYAT_EXTERNAL_UTILITIES_TOOLS_0_0_0_H
 #define REYADEYAT_EXTERNAL_UTILITIES_TOOLS_0_0_0_H
 
+void external_is_little_endian_v_0_0_0(int *is_little_endin);
+void external_is_big_endian_v_0_0_0(int *is_big_endin);
 void external_reyadeyat_utilities_number_to_char_v_0_0_0(char *input_number_type, const void *input_number, char* output_buffer, int *output_length, Reyadeyat_Process *reyadeyat_process);
 
+extern int64_t reyadeyat_assembly_allaho_akbar(int64_t, int64_t, int64_t);
 
 #endif //REYADEYAT_EXTERNAL_UTILITIES_TOOLS_0_0_0_H

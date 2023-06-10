@@ -217,6 +217,13 @@ int memory_main(int argc, char **argv) {
     reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
 
     //Start Program Processing
+    int is_big_endian = 0;
+    int is_littel_endian = 0;
+    reyadeyat_process.kernel->utilities_module->is_big_endian(&is_big_endian);
+    printf("BIG-ENDIAN '%s'\n", is_big_endian == 0 ? "FALSE" : "TRUE");
+    reyadeyat_process.kernel->utilities_module->is_little_endian(&is_littel_endian);
+    printf("LITTLE-ENDIAN '%s'\n", is_littel_endian == 0 ? "FALSE" : "TRUE");
+
     int number = 789542;
     char number_str[30];
     int number_str_length;
@@ -237,7 +244,6 @@ int memory_main(int argc, char **argv) {
 }
 
 #endif
-
 
 static int continue_main_loop = 1;
 

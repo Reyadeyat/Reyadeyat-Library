@@ -77,6 +77,9 @@ REYADEYAT_DATA_TYPE(Reyadeyat_Process) {
     Reyadeyat_Log_List *log_list;
 };
 
-
+REYADEYAT_DATA_TYPE(ReyadeyatADSPage) {
+    unsigned int weight;
+    void *abstract_data_type;
+};
 
 #endif //REYADEYAT_H

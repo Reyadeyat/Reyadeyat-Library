@@ -43,6 +43,7 @@ extern Reyadeyat_Utilities_Module *load_reyadeyat_utilities_module(char *library
         }
         Reyadeyat_Utilities_Module *reyadeyat_utilities_module = malloc(sizeof(Reyadeyat_Utilities_Module));
         reyadeyat_utilities_module->number_to_char = dlsym(handle, "external_reyadeyat_utilities_number_to_char_v_0_0_0");
+        reyadeyat_utilities_module->is_little_endian = dlsym(handle, "external_is_little_endian_v_0_0_0");
         return reyadeyat_utilities_module;
     }
     return NULL;
@@ -59,6 +60,8 @@ Reyadeyat_Utilities_Module *load_reyadeyat_utilities_module(char *library_file_p
     if (strcmp(version_number, "0.0.0") == 0) {
         Reyadeyat_Utilities_Module *reyadeyat_utilities_module = malloc(sizeof *reyadeyat_utilities_module);
         reyadeyat_utilities_module->number_to_char = external_reyadeyat_utilities_number_to_char_v_0_0_0;
+        reyadeyat_utilities_module->is_little_endian = external_is_little_endian_v_0_0_0;
+        reyadeyat_utilities_module->is_big_endian = external_is_big_endian_v_0_0_0;
         reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __UTILITIES_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "Initializing Utilities Module - Done - returning");
         return reyadeyat_utilities_module;
     }

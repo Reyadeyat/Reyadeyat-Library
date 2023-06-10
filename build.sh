@@ -22,10 +22,10 @@ echo "--------------------------------------------------------------------------
 #CMAKE_C_COMPILER="/usr/bin/clang"
 CMAKE_C_COMPILER="/usr/bin/gcc"
 if [ $BUILD == "DEBUG" ]; then
-    CMAKE_C_FLAGS="-g -Wall -Werror -fPIC -fstack-protector --save-temps"
+    CMAKE_C_FLAGS="-m64 -g -Wall -Werror -fPIC -fPIE -pie -fstack-protector --save-temps -x 'none'"
     CMAKE_C_FLAGS_DEBUG="-g"
 else
-    CMAKE_C_FLAGS="-Wall -Werror -fPIC -O2 -fstack-protector --save-temps"
+    CMAKE_C_FLAGS="-m64 -Wall -Werror -fPIC -fPIE -pie -O2 -fstack-protector --save-temps -x 'none'"
     CMAKE_C_FLAGS_MINSIZEREL="-Os -DNDEBUG"
     CMAKE_C_FLAGS_RELEASE="-O2 -DNDEBUG"
     CMAKE_C_FLAGS_RELWITHDEBINFO="-O2 -g"
@@ -39,27 +39,30 @@ echo "Cleaning Reyadeyat-Module"
 rm -rf $PROJECT_PATH/Reyadeyat-Module/build
 rm -rf $PROJECT_PATH/Reyadeyat-Module/lib
 
-echo "Building Reyadeyat Modules compiler"
+if [ $BUILD == "LIIBRARY" ]; then
+  echo "Building Reyadeyat Library Modules Mode"
 
-#File Module
+  #File Module
 
-echo "Building Reyadeyat Modules - File 0.0.0"
-source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/file/file.0.0.0/build.sh
-echo "Building Reyadeyat Modules - File API"
-source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/file/build.sh
+  echo "Building Reyadeyat Modules - File 0.0.0"
+  source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/file/file.0.0.0/build.sh
+  echo "Building Reyadeyat Modules - File API"
+  source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/file/build.sh
 
-#Memory Module
-echo "Building Reyadeyat Modules - Memory 0.0.0"
-source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/memory/memory.0.0.0/build.sh
-echo "Building Reyadeyat Modules - Memory API"
-source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/memory/build.sh
+  #Memory Module
+  echo "Building Reyadeyat Modules - Memory 0.0.0"
+  source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/memory/memory.0.0.0/build.sh
+  echo "Building Reyadeyat Modules - Memory API"
+  source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/memory/build.sh
 
-#Utilities Module
-echo "Building Reyadeyat Modules - Utilities 0.0.0"
-source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/utilities/utilities.0.0.0/build.sh
-echo "Building Reyadeyat Modules - Utilities API"
-source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/utilities/build.sh
-
+  #Utilities Module
+  echo "Building Reyadeyat Modules - Utilities 0.0.0"
+  source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/utilities/utilities.0.0.0/build.sh
+  echo "Building Reyadeyat Modules - Utilities API"
+  source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/utilities/build.sh
+else
+  echo "Building Reyadeyat Include Modules Mode"
+fi
 #Executables
 echo "Building Reyadeyat-Executables"
 source $PROJECT_PATH/Reyadeyat-Executables/src/build.sh
