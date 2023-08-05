@@ -26,15 +26,10 @@
  * @since 2023.04.01
  */
 
-#ifndef REYADEYAT_FILE_DATA_STRUCTURES_H
-#define REYADEYAT_FILE_DATA_STRUCTURES_H
+#include "reyadeyat/reyadeyat.h"
 
-REYADEYAT_DATA_TYPE(Reyadeyat_File) {
-    void *file;
-};
+#include "computer.0.0.0.h"
 
-REYADEYAT_DATA_TYPE(Reyadeyat_File_Data) {
-    char *version;
-};
+void computer_sample_v_0_0_0(uint64_t *dataset_buffer, Reyadeyat_Algorithm_Metric *algorithm_metric, Reyadeyat_Process *reyadeyat_process) {
 
-#endif //REYADEYAT_FILE_DATA_STRUCTURES_H
+}

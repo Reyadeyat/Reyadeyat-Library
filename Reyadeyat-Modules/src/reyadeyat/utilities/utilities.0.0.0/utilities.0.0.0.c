@@ -28,49 +28,21 @@
 
 #include "reyadeyat/reyadeyat.h"
 
-#include "external-utilities.0.0.0.h"
+#include "utilities.0.0.0.h"
 
-void external_is_little_endian_v_0_0_0(int *is_little_endin) {
+/** test if processor a little-endian - least-significant byte first*/
+void is_little_endian_v_0_0_0(int *is_little_endin) {
     unsigned int little = 0x0204080A;
     *is_little_endin = *((char *) &little) == 0x0A;
 }
 
-void external_is_big_endian_v_0_0_0(int *is_big_endin) {
+/** test if processor a big-endian - most-significant byte first*/
+void is_big_endian_v_0_0_0(int *is_big_endin) {
     unsigned int big = 0x0204080A;
     *is_big_endin = *((char *) &big) == 0x02;
-
-    int src = 1;
-    int dst;
-
-    asm
-    (
-        "mov %1, %0\n\t"
-        "add $1, %0"
-        :
-        "=r" (dst)
-        :
-        "r" (src)
-    );
-    printf("%d\n", dst);
-
-    //unsigned int leaf = 4, subleaf = 0;
-    struct cpuid { unsigned int eax; unsigned int ebx; unsigned int ecx; unsigned int edx; };
-    struct cpuid cpuid = {.eax = 1, .ebx = 0, .ecx = 0, .edx = 0};
-    asm ("cpuid"
-            :
-            "=a" (cpuid.eax),
-            "=b" (cpuid.ebx),
-            "=c" (cpuid.ecx),
-            "=d" (cpuid.edx)
-            :
-            "a" (cpuid.eax), "c" (cpuid.ecx));
-    printf("CPU Cores %d\n", (cpuid.ebx >> 16) & 0xff);
-
-    int64_t x = reyadeyat_assembly_allaho_akbar(1, -4, -7);
-    x = x;
 }
 
-void external_reyadeyat_utilities_number_to_char_v_0_0_0(char *input_number_type, const void *input_number,
+void reyadeyat_utilities_number_to_char_v_0_0_0(char *input_number_type, const void *input_number,
                                                          char *output_buffer, int *output_length,
                                                          Reyadeyat_Process *reyadeyat_process) {
     reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __UTILITIES_MODULE__, __FILE_NAME__, __func__, __LINE__,
@@ -102,3 +74,4 @@ void external_reyadeyat_utilities_number_to_char_v_0_0_0(char *input_number_type
     //*output_length = count+1;
     *output_length = count;
 }
+

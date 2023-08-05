@@ -42,8 +42,9 @@ extern Reyadeyat_Utilities_Module *load_reyadeyat_utilities_module(char *library
             return NULL;
         }
         Reyadeyat_Utilities_Module *reyadeyat_utilities_module = malloc(sizeof(Reyadeyat_Utilities_Module));
-        reyadeyat_utilities_module->number_to_char = dlsym(handle, "external_reyadeyat_utilities_number_to_char_v_0_0_0");
-        reyadeyat_utilities_module->is_little_endian = dlsym(handle, "external_is_little_endian_v_0_0_0");
+        reyadeyat_utilities_module->number_to_char = dlsym(handle, "utilities_number_to_char_v_0_0_0");
+        reyadeyat_utilities_module->is_little_endian = dlsym(handle, "is_little_endian_v_0_0_0");
+        reyadeyat_utilities_module->is_little_endian = dlsym(handle, "is_big_endian_v_0_0_0");
         return reyadeyat_utilities_module;
     }
     return NULL;
@@ -51,7 +52,7 @@ extern Reyadeyat_Utilities_Module *load_reyadeyat_utilities_module(char *library
 
 #elif MODE == INCLUDE
 
-#include "reyadeyat/utilities/utilities.0.0.0/external-utilities.0.0.0.h"
+#include "reyadeyat/utilities/utilities.0.0.0/utilities.0.0.0.h"
 
 Reyadeyat_Utilities_Module *load_reyadeyat_utilities_module(char *library_file_path, char *version_number, Reyadeyat_Process *reyadeyat_process) {
     reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __UTILITIES_MODULE__, __FILE_NAME__, __func__, __LINE__,reyadeyat_process->log_list, "Utilities Module Loading MODE=LIBRARY loading version \"%s\" library_file_path => %s", version_number, library_file_path);
@@ -59,9 +60,9 @@ Reyadeyat_Utilities_Module *load_reyadeyat_utilities_module(char *library_file_p
     printf("load_reyadeyat_utilities_module library_file_path => %s\n", library_file_path);
     if (strcmp(version_number, "0.0.0") == 0) {
         Reyadeyat_Utilities_Module *reyadeyat_utilities_module = malloc(sizeof *reyadeyat_utilities_module);
-        reyadeyat_utilities_module->number_to_char = external_reyadeyat_utilities_number_to_char_v_0_0_0;
-        reyadeyat_utilities_module->is_little_endian = external_is_little_endian_v_0_0_0;
-        reyadeyat_utilities_module->is_big_endian = external_is_big_endian_v_0_0_0;
+        reyadeyat_utilities_module->number_to_char = reyadeyat_utilities_number_to_char_v_0_0_0;
+        reyadeyat_utilities_module->is_little_endian = is_little_endian_v_0_0_0;
+        reyadeyat_utilities_module->is_big_endian = is_big_endian_v_0_0_0;
         reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __UTILITIES_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "Initializing Utilities Module - Done - returning");
         return reyadeyat_utilities_module;
     }

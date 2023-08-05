@@ -26,15 +26,13 @@
  * @since 2023.04.01
  */
 
-#ifndef REYADEYAT_FILE_DATA_STRUCTURES_H
-#define REYADEYAT_FILE_DATA_STRUCTURES_H
+#ifndef REYADEYAT_FILE_0_0_0_H
+#define REYADEYAT_FILE_0_0_0_H
 
-REYADEYAT_DATA_TYPE(Reyadeyat_File) {
-    void *file;
-};
+void reyadeyat_file_create_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process);
+void reyadeyat_file_copy_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process);
+void reyadeyat_file_save_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process);
+void reyadeyat_file_close_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process);
 
-REYADEYAT_DATA_TYPE(Reyadeyat_File_Data) {
-    char *version;
-};
 
-#endif //REYADEYAT_FILE_DATA_STRUCTURES_H
+#endif //REYADEYAT_FILE_MEMORY0_0_0_H

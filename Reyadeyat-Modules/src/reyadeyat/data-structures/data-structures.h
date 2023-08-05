@@ -26,13 +26,15 @@
  * @since 2023.04.01
  */
 
-#ifndef REYADEYAT_EXTERNAL_UTILITIES_TOOLS_0_0_0_H
-#define REYADEYAT_EXTERNAL_UTILITIES_TOOLS_0_0_0_H
+#ifndef REYADEYAT_DATA_STRUCTURES_H
+#define REYADEYAT_DATA_STRUCTURES_H
 
-void external_is_little_endian_v_0_0_0(int *is_little_endin);
-void external_is_big_endian_v_0_0_0(int *is_big_endin);
-void external_reyadeyat_utilities_number_to_char_v_0_0_0(char *input_number_type, const void *input_number, char* output_buffer, int *output_length, Reyadeyat_Process *reyadeyat_process);
+REYADEYAT_DATA_TYPE(Reyadeyat_Data_Structures_Module) {
+    void (*number_to_char)(char *input_number_type, const void *input_number, char* output_buffer, int *output_length, Reyadeyat_Process *reyadeyat_process);
+    void (*is_little_endian)(int *is_little_endin);
+    void (*is_big_endian)(int *is_big_endin);
+};
 
-extern int64_t reyadeyat_assembly_allaho_akbar(int64_t, int64_t, int64_t);
+extern Reyadeyat_Data_Structures_Module *load_reyadeyat_data_structures_module(char *library_file_path, char *version_number, Reyadeyat_Process *reyadeyat_process);
 
-#endif //REYADEYAT_EXTERNAL_UTILITIES_TOOLS_0_0_0_H
+#endif //REYADEYAT_DATA_STRUCTURES_H

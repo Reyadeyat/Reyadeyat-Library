@@ -43,10 +43,10 @@ Reyadeyat_File_Module *load_reyadeyat_file_module(char *library_file_path, char 
             return NULL;
         }
         Reyadeyat_File_Module *reyadeyat_file_module = malloc(sizeof(Reyadeyat_File_Module));
-        reyadeyat_file_module->create_memory_file = dlsym(handle, "external_reyadeyat_file_create_memory_file_v_0_0_0");
-        reyadeyat_file_module->copy_memory_file = dlsym(handle, "external_reyadeyat_file_copy_memory_file_v_0_0_0");
-        reyadeyat_file_module->save_memory_file = dlsym(handle, "external_reyadeyat_file_save_memory_file_v_0_0_0");
-        reyadeyat_file_module->close_memory_file = dlsym(handle, "external_reyadeyat_file_close_memory_file_v_0_0_0");
+        reyadeyat_file_module->create_memory_file = dlsym(handle, "file_create_memory_file_v_0_0_0");
+        reyadeyat_file_module->copy_memory_file = dlsym(handle, "file_copy_memory_file_v_0_0_0");
+        reyadeyat_file_module->save_memory_file = dlsym(handle, "file_save_memory_file_v_0_0_0");
+        reyadeyat_file_module->close_memory_file = dlsym(handle, "file_close_memory_file_v_0_0_0");
         return reyadeyat_file_module;
     }
     return NULL;
@@ -54,17 +54,17 @@ Reyadeyat_File_Module *load_reyadeyat_file_module(char *library_file_path, char 
 
 #elif MODE == INCLUDE
 
-#include "reyadeyat/file/file.0.0.0/external-file.0.0.0.h"
-#include "reyadeyat/utilities//utilities.0.0.0/external-utilities.0.0.0.h"
+#include "reyadeyat/file/file.0.0.0/file.0.0.0.h"
+#include "reyadeyat/utilities/utilities.0.0.0/utilities.0.0.0.h"
 
 Reyadeyat_File_Module *load_reyadeyat_file_module(char *library_file_path, char *version_number, Reyadeyat_Process *reyadeyat_process) {
     reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __FILE_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "File Module Loading MODE=INCLUDE loading version \"%s\" library_file_path => %s", version_number, library_file_path);
     if (strcmp(version_number, "0.0.0") == 0) {
         Reyadeyat_File_Module *reyadeyat_file_module = malloc(sizeof(Reyadeyat_File_Module));
-        reyadeyat_file_module->create_memory_file = external_reyadeyat_file_create_memory_file_v_0_0_0;
-        reyadeyat_file_module->copy_memory_file = external_reyadeyat_file_copy_memory_file_v_0_0_0;
-        reyadeyat_file_module->save_memory_file = external_reyadeyat_file_save_memory_file_v_0_0_0;
-        reyadeyat_file_module->close_memory_file = external_reyadeyat_file_close_memory_file_v_0_0_0;
+        reyadeyat_file_module->create_memory_file = reyadeyat_file_create_memory_file_v_0_0_0;
+        reyadeyat_file_module->copy_memory_file = reyadeyat_file_copy_memory_file_v_0_0_0;
+        reyadeyat_file_module->save_memory_file = reyadeyat_file_save_memory_file_v_0_0_0;
+        reyadeyat_file_module->close_memory_file = reyadeyat_file_close_memory_file_v_0_0_0;
         reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __FILE_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "Initializing File Module - Done - returning");
         return reyadeyat_file_module;
     }

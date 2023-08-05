@@ -26,13 +26,13 @@
  * @since 2023.04.01
  */
 
-#ifndef REYADEYAT_INTERNAL_FILE_0_0_0_H
-#define REYADEYAT_INTERNAL_FILE_0_0_0_H
+#ifndef REYADEYAT_COMPUTER_H
+#define REYADEYAT_COMPUTER_H
 
-void internal_reyadeyat_file_create_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process);
-void internal_reyadeyat_file_copy_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process);
-void internal_reyadeyat_file_save_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process);
-void internal_reyadeyat_file_close_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process);
+REYADEYAT_DATA_TYPE(Reyadeyat_Computer_Module) {
+    void (*computer_sample)(uint64_t *dataset_buffer, Reyadeyat_Algorithm_Metric* algorithm_metric, Reyadeyat_Process *reyadeyat_process);
+};
 
+extern Reyadeyat_Computer_Module *load_reyadeyat_computer_module(char *library_file_path, char *version_number, Reyadeyat_Process *reyadeyat_process);
 
-#endif //REYADEYAT_C_FILE_MEMORY_INTERNAL_0_0_0_H
+#endif //REYADEYAT_COMPUTER_H
