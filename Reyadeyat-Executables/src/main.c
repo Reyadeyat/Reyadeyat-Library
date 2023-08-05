@@ -54,6 +54,32 @@ int memory_main(int argc, char **argv) {
         return 1;
     }
 
+    //Load Algorithms Library
+    char algorithms_library_file[2048];
+    memcpy(algorithms_library_file, lib_path, lib_path_len+1);
+    char *algorithms_library_file_suffix = "/reyadeyat-algorithms-lib.so";
+    strncpy(algorithms_library_file+lib_path_len-1, algorithms_library_file_suffix, strlen(algorithms_library_file_suffix));
+    printf ("algorithms Library loading file: %s\n", algorithms_library_file);
+    void* reyadeyat_algorithms_module_library = dlopen(algorithms_library_file, RTLD_LAZY);
+    dl_error = (char*) dlerror();
+    if (reyadeyat_algorithms_module_library == NULL) {
+        printf("Error Loading lib file '%s' => %s\n", lib_path, dl_error);
+        return 1;
+    }
+
+    //Load Datas Sructures Library
+    char data_structures_library_file[2048];
+    memcpy(data_structures_library_file, lib_path, lib_path_len+1);
+    char *data_structures_library_file_suffix = "/reyadeyat-data_structures-lib.so";
+    strncpy(data_structures_library_file+lib_path_len-1, data_structures_library_file_suffix, strlen(data_structures_library_file_suffix));
+    printf ("data_structures Library loading file: %s\n", data_structures_library_file);
+    void* reyadeyat_data_structures_module_library = dlopen(data_structures_library_file, RTLD_LAZY);
+    dl_error = (char*) dlerror();
+    if (reyadeyat_data_structures_module_library == NULL) {
+        printf("Error Loading lib file '%s' => %s\n", lib_path, dl_error);
+        return 1;
+    }
+
     //Load File Library
     char file_library_file[2048];
     memcpy(file_library_file, lib_path, lib_path_len);
@@ -109,6 +135,48 @@ int memory_main(int argc, char **argv) {
         return 1;
     }
     reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading Utilities Module end");
+    reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
+
+    //Load Algorithms Module
+    char algorithms_library_file_path[1024];
+    char *algorithms_library_version_number = "0.0.0";
+    memcpy(algorithms_library_file_path, lib_path, lib_path_len);
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading Algorithms Module start");
+    //Load Algorithms Module Library
+    Reyadeyat_Algorithms_Module* (*load_reyadeyat_algorithms_module)(char *, char *, Reyadeyat_Process *) = dlsym(reyadeyat_algorithms_module_library, "load_reyadeyat_algorithms_module");
+    if (load_reyadeyat_algorithms_module == NULL) {
+        printf ("Error loading function load_reyadeyat_algorithms_module version \"%s\"\n", algorithms_library_version_number);
+        reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
+    }
+    printf ("Calling load_reyadeyat_algorithms_module \"%s\" algorithms_library_file_path => %s\n", algorithms_library_version_number, algorithms_library_file_path);
+    reyadeyat_process.kernel->algorithms_module = load_reyadeyat_algorithms_module(algorithms_library_file_path, algorithms_library_version_number, &reyadeyat_process);
+    if (reyadeyat_process.kernel->algorithms_module == NULL) {
+        printf ("Failed running load_reyadeyat_algorithms_module \"%s\" algorithms_library_file_path => %s\n", algorithms_library_version_number, algorithms_library_file_path);
+        reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
+        return 1;
+    }
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading Algorithms Module end");
+    reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
+
+    //Load Data Structures Module
+    char data_structures_library_file_path[1024];
+    char *data_structures_library_version_number = "0.0.0";
+    memcpy(data_structures_library_file_path, lib_path, lib_path_len);
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading Data Structures Module start");
+    //Load Data Structures Module Library
+    Reyadeyat_Data Structures_Module* (*load_reyadeyat_data_structures_module)(char *, char *, Reyadeyat_Process *) = dlsym(reyadeyat_data_structures_module_library, "load_reyadeyat_data_structures_module");
+    if (load_reyadeyat_data_structures_module == NULL) {
+        printf ("Error loading function load_reyadeyat_data_structures_module version \"%s\"\n", data_structures_library_version_number);
+        reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
+    }
+    printf ("Calling load_reyadeyat_data_structures_module \"%s\" data_structures_library_file_path => %s\n", data_structures_library_version_number, data_structures_library_file_path);
+    reyadeyat_process.kernel->data_structures_module = load_reyadeyat_data_structures_module(data_structures_library_file_path, data_structures_library_version_number, &reyadeyat_process);
+    if (reyadeyat_process.kernel->data_structures_module == NULL) {
+        printf ("Failed running load_reyadeyat_data_structures_module \"%s\" data_structures_library_file_path => %s\n", data_structures_library_version_number, data_structures_library_file_path);
+        reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
+        return 1;
+    }
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process.log_list, "Loading Data Structures Module end");
     reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
 
     //Load File Module
@@ -174,6 +242,176 @@ int memory_main(int argc, char **argv) {
 
 #elif MODE == INCLUDE
 
+void print_r_script(char *r_script_file_path, char* algorithm_title, uint64_t CASE_ROUNDS, UINT64 *x_axis_dataset_size, UINT64 *y_axis_instruction_count) {
+    /*print R script*/
+    /*int STD_OUTPUT_FD = dup(1);
+    int r_script_fd;*/
+    /*r_script_fd = open(r_script_file_path, O_WRONLY | O_CREAT, 0644);
+    if (r_script_fd == -1) {
+        perror("open failed");
+        exit(1);
+    }
+
+    if (dup2(r_script_fd, 1) == -1) {
+        perror("dup2 failed");
+        exit(1);
+    }*/
+
+    FILE *r_script_file = fopen (r_script_file_path, "w+");
+
+    if (r_script_file == NULL) {
+        perror("open failed");
+        exit(1);
+    }
+
+    fprintf(r_script_file,
+            "#install.packages(\"iterators\")\n"
+            "#install.packages(\"parallel\")\n"
+            "#install.packages(\"foreach\")\n"
+            "#install.packages(\"doParallel\")\n"
+            "library(foreach)\n"
+            "library(doParallel)\n"
+            "numCores <- 4\n"
+            "registerDoParallel(numCores)\n"
+            "set.seed(as.numeric(Sys.time()))\n"
+    );
+
+
+    fprintf(r_script_file, "x_axis_dataset <- c(\n");
+    for (UINT64 c = 0; c < CASE_ROUNDS - 1; c++) {
+        fprintf(r_script_file, "\t%" PRIu64 ",\n", x_axis_dataset_size[c]);
+    }
+    fprintf(r_script_file, "\t%" PRIu64 ")\n\n", x_axis_dataset_size[CASE_ROUNDS - 1]);
+
+    fprintf(r_script_file, "y_axis_instructions <- c(\n");
+    for (UINT64 c = 0; c < CASE_ROUNDS - 1; c++) {
+        fprintf(r_script_file, "\t%" PRIu64 ",\n", y_axis_instruction_count[c]);
+    }
+    fprintf(r_script_file, "\t%" PRIu64 ")\n\n", y_axis_instruction_count[CASE_ROUNDS - 1]);
+
+    fprintf(r_script_file,
+            "max_dataset <- max(x_axis_dataset)\n"
+            "max_instructions <- max(y_axis_instructions)\n"
+            "x_axis_dataset <- lapply(x_axis_dataset, FUN = function(x_) ((x_/max_dataset)*100) )\n"
+            "y_axis_instructions <- lapply(y_axis_instructions, FUN = function(y_) ((y_/max_instructions)*100) )\n"
+            );
+
+    fprintf(r_script_file,
+            "plot(x_axis_dataset, y_axis_instructions,\n"
+            "\tmain=\"%s Instruction per Case Dataset\",\n"
+            "\txlab=\"Instructions per round\",\n"
+            "\tylab=\"Dataset Size\",\n"
+            "\tsub=\"Sub-title\",\n"
+            "\tcol.lab = \"blue\",\n"
+            "\tcol.axis = \"orange\"\n)\n",
+            algorithm_title
+    );
+
+    /*fprintf(r_script_file,
+            "axis(1, at=x_axis, labels=sprintf(\"%%#.0f\", (x_axis/max_instructions)*100))\n");*/
+    fflush(r_script_file);
+    fclose(r_script_file);
+    /*fsync(r_script_fd);
+    close(r_script_fd);
+    dup2(STD_OUTPUT_FD, 1);
+    close(STD_OUTPUT_FD);*/
+}
+
+void analyze_bubble_sort(Reyadeyat_Process *reyadeyat_process) {
+    char *algorithm_title = "Bubble Sort";
+    UINT64 CASE_ROUNDS = 10000;
+    UINT64 MAX_SAMPLE_VALUE = 50000000;
+    UINT64 MAX_DATA_BUFFER_SIZE = 10000;
+    UINT64 *dataset_buffer = malloc(sizeof(UINT64) * MAX_DATA_BUFFER_SIZE);
+    UINT64 last_rand = (UINT64) time(NULL);
+    UINT64 x_axis_dataset_size[CASE_ROUNDS];
+    UINT64 y_axis_instruction_count[CASE_ROUNDS];
+    for (UINT64 c = 0; c < CASE_ROUNDS; c++) {
+        UINT64 case_dataset_buffer_size = (UINT64) rand() % (UINT64) MAX_DATA_BUFFER_SIZE;
+        case_dataset_buffer_size = case_dataset_buffer_size == 0 ? 1 : case_dataset_buffer_size;
+        Reyadeyat_Algorithm_Metric algorithm_metric = {.dataset_size = case_dataset_buffer_size, .instruction_count = 0};
+        srand(last_rand);
+        for (UINT64 i = 0; i < algorithm_metric.dataset_size; i++) {
+            dataset_buffer[i] = (UINT64) rand() % (UINT64) MAX_SAMPLE_VALUE;
+        }
+        reyadeyat_process->kernel->algorithms_module->bubble_sort(dataset_buffer, &algorithm_metric, reyadeyat_process);
+        printf("%" PRIu64 " - %s metrics dataset_size =  %" PRIu64 " , instruction_count = %" PRIu64 "\n",
+               c, algorithm_title, algorithm_metric.dataset_size, algorithm_metric.instruction_count);
+        last_rand = (UINT64) rand();
+
+        x_axis_dataset_size[c] = algorithm_metric.dataset_size;
+        y_axis_instruction_count[c] = algorithm_metric.instruction_count;
+    }
+
+    //char *r_script_file_path = "/linux/projects/yanobel/R/script_1.r";
+    char *r_script_file_path = "/linux/reyadeyat/yanobel/R/bubble_sort_script.r";
+    print_r_script(r_script_file_path, algorithm_title, CASE_ROUNDS, x_axis_dataset_size, y_axis_instruction_count);
+
+
+}
+
+void analyze_merge_sort(Reyadeyat_Process *reyadeyat_process) {
+    char *algorithm_title = "Merge Sort";
+    UINT64 CASE_ROUNDS = 10000;
+    UINT64 MAX_SAMPLE_VALUE = 50000000;
+    UINT64 MAX_DATA_BUFFER_SIZE = 10000;
+    UINT64 *dataset_buffer = malloc(sizeof(UINT64) * MAX_DATA_BUFFER_SIZE);
+    UINT64 last_rand = (UINT64) time(NULL);
+    UINT64 x_axis_dataset_size[CASE_ROUNDS];
+    UINT64 y_axis_instruction_count[CASE_ROUNDS];
+    for (UINT64 c = 0; c < CASE_ROUNDS; c++) {
+        UINT64 case_dataset_buffer_size = (UINT64) rand() % (UINT64) MAX_DATA_BUFFER_SIZE;
+        case_dataset_buffer_size = case_dataset_buffer_size == 0 ? 1 : case_dataset_buffer_size;
+        Reyadeyat_Algorithm_Metric algorithm_metric = {.dataset_size = case_dataset_buffer_size, .instruction_count = 0};
+        srand(last_rand);
+        for (UINT64 i = 0; i < algorithm_metric.dataset_size; i++) {
+            dataset_buffer[i] = (UINT64) rand() % (UINT64) MAX_SAMPLE_VALUE;
+        }
+        reyadeyat_process->kernel->algorithms_module->merge_sort(dataset_buffer, algorithm_metric.dataset_size * 0.25, algorithm_metric.dataset_size * 0.75, &algorithm_metric, reyadeyat_process);
+        printf("%" PRIu64 " - %s metrics dataset_size =  %" PRIu64 " , instruction_count = %" PRIu64 "\n",
+               c, algorithm_title, algorithm_metric.dataset_size, algorithm_metric.instruction_count);
+        last_rand = (UINT64) rand();
+
+        x_axis_dataset_size[c] = algorithm_metric.dataset_size;
+        y_axis_instruction_count[c] = algorithm_metric.instruction_count;
+    }
+
+    //char *r_script_file_path = "/linux/projects/yanobel/R/script_1.r";
+    char *r_script_file_path = "/linux/reyadeyat/yanobel/R/merge_sort_script.r";
+    print_r_script(r_script_file_path, algorithm_title, CASE_ROUNDS, x_axis_dataset_size, y_axis_instruction_count);
+}
+
+void analyze_quicksort_sort(Reyadeyat_Process *reyadeyat_process) {
+    char *algorithm_title = "Quick Sort";
+    UINT64 CASE_ROUNDS = 10000;
+    UINT64 MAX_SAMPLE_VALUE = 50000000;
+    UINT64 MAX_DATA_BUFFER_SIZE = 10000;
+    UINT64 *dataset_buffer = malloc(sizeof(UINT64) * MAX_DATA_BUFFER_SIZE);
+    UINT64 last_rand = (UINT64) time(NULL);
+    UINT64 x_axis_dataset_size[CASE_ROUNDS];
+    UINT64 y_axis_instruction_count[CASE_ROUNDS];
+    for (UINT64 c = 0; c < CASE_ROUNDS; c++) {
+        UINT64 case_dataset_buffer_size = (UINT64) rand() % (UINT64) MAX_DATA_BUFFER_SIZE;
+        case_dataset_buffer_size = case_dataset_buffer_size == 0 ? 1 : case_dataset_buffer_size;
+        Reyadeyat_Algorithm_Metric algorithm_metric = {.dataset_size = case_dataset_buffer_size, .instruction_count = 0};
+        srand(last_rand);
+        for (UINT64 i = 0; i < algorithm_metric.dataset_size; i++) {
+            dataset_buffer[i] = (UINT64) rand() % (UINT64) MAX_SAMPLE_VALUE;
+        }
+        reyadeyat_process->kernel->algorithms_module->quick_sort(dataset_buffer, 0, algorithm_metric.dataset_size - 1, &algorithm_metric, reyadeyat_process);
+        printf("%" PRIu64 " - %s metrics dataset_size =  %" PRIu64 " , instruction_count = %" PRIu64 "\n",
+               c, algorithm_title, algorithm_metric.dataset_size, algorithm_metric.instruction_count);
+        last_rand = (UINT64) rand();
+
+        x_axis_dataset_size[c] = algorithm_metric.dataset_size;
+        y_axis_instruction_count[c] = algorithm_metric.instruction_count;
+    }
+
+    //char *r_script_file_path = "/linux/projects/yanobel/R/script_1.r";
+    char *r_script_file_path = "/linux/reyadeyat/yanobel/R/quick_sort_script.r";
+    print_r_script(r_script_file_path, algorithm_title, CASE_ROUNDS, x_axis_dataset_size, y_axis_instruction_count);
+}
+
 int memory_main(int argc, char **argv) {
     printf("Calling load_reyadeyat_memory_module 0.0.0 from header file - INCLUDE\n");
 
@@ -196,7 +434,19 @@ int memory_main(int argc, char **argv) {
     reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__,
                                   reyadeyat_process.log_list, "Loading Utilities Module end");
 
-    reyadeyat_log_print_log_list(stream, reyadeyat_process.log_list);
+    //Load Algorithms Module
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__,
+                                  reyadeyat_process.log_list, "Loading Algorithms Module start");
+    reyadeyat_process.kernel->algorithms_module = load_reyadeyat_algorithms_module("", "0.0.0", &reyadeyat_process);
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__,
+                                  reyadeyat_process.log_list, "Loading Algorithms Module end");
+
+    //Load Data Structures Module
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__,
+                                  reyadeyat_process.log_list, "Loading Data Structures Module start");
+    reyadeyat_process.kernel->data_structures_module = load_reyadeyat_data_structures_module("", "0.0.0", &reyadeyat_process);
+    reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__,
+                                  reyadeyat_process.log_list, "Loading Data Structures Module end");
 
     //Load File Module
     reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __REYADEYAT_MAIN_MODULE__, __FILE_NAME__, __func__, __LINE__,
@@ -235,9 +485,13 @@ int memory_main(int argc, char **argv) {
     reyadeyat_process.kernel->file_module->close_memory_file(&reyadeyat_file_data, &reyadeyat_process);
 
     Reyadeyat_Memory_Data reyadeyat_memory_data_0_0_0 = {"0.0.0", "Reyadeyat_Memory_Data_0_0_0", 32};
-    reyadeyat_process.kernel->memory_module->process(&reyadeyat_memory_data_0_0_0, &reyadeyat_process);
+    reyadeyat_process.kernel->memory_module->module(&reyadeyat_memory_data_0_0_0, &reyadeyat_process);
 
     reyadeyat_process.kernel->memory_module->destruct(&reyadeyat_memory_data_0_0_0, &reyadeyat_process);
+
+    analyze_quicksort_sort(&reyadeyat_process);
+    analyze_merge_sort(&reyadeyat_process);
+    analyze_bubble_sort(&reyadeyat_process);
 
     printf("Completed Successfully\n");
     return 0;

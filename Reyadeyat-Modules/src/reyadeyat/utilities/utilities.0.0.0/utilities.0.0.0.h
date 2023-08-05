@@ -26,9 +26,13 @@
  * @since 2023.04.01
  */
 
-#ifndef REYADEYAT_INTERNAL_UTILITIES_TOOLS_0_0_0_H
-#define REYADEYAT_INTERNAL_UTILITIES_TOOLS_0_0_0_H
+#ifndef REYADEYAT_UTILITIES_0_0_0_H
+#define REYADEYAT_UTILITIES_0_0_0_H
 
 #include "reyadeyat/reyadeyat.h"
 
-#endif //REYADEYAT_INTERNAL_UTILITIES_TOOLS_0_0_0_H
+void is_little_endian_v_0_0_0(int *is_little_endin);
+void is_big_endian_v_0_0_0(int *is_big_endin);
+void reyadeyat_utilities_number_to_char_v_0_0_0(char *input_number_type, const void *input_number, char* output_buffer, int *output_length, Reyadeyat_Process *reyadeyat_process);
+
+#endif //REYADEYAT_UTILITIES_0_0_0_H

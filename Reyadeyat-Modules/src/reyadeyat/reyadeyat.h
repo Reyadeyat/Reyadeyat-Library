@@ -29,26 +29,39 @@
 #ifndef REYADEYAT_H
 #define REYADEYAT_H
 
+#include <inttypes.h>
 #include <signal.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <dlfcn.h>
 #include <stdint.h>
 #include <assert.h>
 #include <stdarg.h>
-#include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include <sys/time.h>
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 typedef struct Reyadeyat_Process Reyadeyat_Process;
 
 #include "reyadeyat/core.h"
 #include "reyadeyat/log/log.h"
+#include "reyadeyat/utilities/utilities-data-structures.h"
+#include "reyadeyat/utilities/utilities.h"
+#include "reyadeyat/algorithms/algorithms-data-structures.h"
+#include "reyadeyat/algorithms/algorithms.h"
+#include "reyadeyat/data-structures/data-structures-data-structures.h"
+#include "reyadeyat/data-structures/data-structures.h"
 #include "reyadeyat/file/file-data-structures.h"
 #include "reyadeyat/file/file.h"
 #include "reyadeyat/memory/memory-data-structures.h"
 #include "reyadeyat/memory/memory.h"
-#include "reyadeyat/utilities/utilities.h"
+#include "reyadeyat/computer/computer-data-structures.h"
+#include "reyadeyat/computer/computer.h"
 
 //MODE {LIBRARY, INCLUDE}
 #define LIBRARY 1
@@ -68,6 +81,8 @@ typedef struct Reyadeyat_Process Reyadeyat_Process;
 
 REYADEYAT_DATA_TYPE(Reyadeyat_Kernel) {
     Reyadeyat_Utilities_Module *utilities_module;
+    Reyadeyat_Algorithms_Module *algorithms_module;
+    Reyadeyat_Data_Structures_Module *data_structures_module;
     Reyadeyat_File_Module *file_module;
     Reyadeyat_Memory_Module *memory_module;
 };

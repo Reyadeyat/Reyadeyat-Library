@@ -26,8 +26,8 @@
  * @since 2023.04.01
  */
 
-#ifndef REYADEYAT_C_MEMORY_DATA_STRUCTURES_H
-#define REYADEYAT_C_MEMORY_DATA_STRUCTURES_H
+#ifndef REYADEYAT_MEMORY_DATA_STRUCTURES_H
+#define REYADEYAT_MEMORY_DATA_STRUCTURES_H
 
 REYADEYAT_DATA_TYPE(Reyadeyat_Node_Sequence) {
     void *structure;
@@ -104,4 +104,4 @@ REYADEYAT_DATA_TYPE(Reyadeyat_Memory_Data) {
     unsigned long buffer_size_long;
 };
 
-#endif //REYADEYAT_C_MEMORY_DATA_STRUCTURES_H
+#endif //REYADEYAT_MEMORY_DATA_STRUCTURES_H

@@ -26,15 +26,15 @@
  * @since 2023.04.01
  */
 
-#ifndef REYADEYAT_FILE_DATA_STRUCTURES_H
-#define REYADEYAT_FILE_DATA_STRUCTURES_H
+#ifndef REYADEYAT_ALGORITHMS_H
+#define REYADEYAT_ALGORITHMS_H
 
-REYADEYAT_DATA_TYPE(Reyadeyat_File) {
-    void *file;
+REYADEYAT_DATA_TYPE(Reyadeyat_Algorithms_Module) {
+    void (*bubble_sort)(uint64_t *dataset_buffer, Reyadeyat_Algorithm_Metric* algorithm_metric, Reyadeyat_Process *reyadeyat_process);
+    void (*merge_sort)(uint64_t *dataset_buffer, int64_t left_index, int64_t right_index, Reyadeyat_Algorithm_Metric *algorithm_metric, Reyadeyat_Process *reyadeyat_process);
+    void (*quick_sort)(uint64_t *dataset_buffer, int64_t low_index, int64_t high_index, Reyadeyat_Algorithm_Metric *algorithm_metric, Reyadeyat_Process *reyadeyat_process);
 };
 
-REYADEYAT_DATA_TYPE(Reyadeyat_File_Data) {
-    char *version;
-};
+extern Reyadeyat_Algorithms_Module *load_reyadeyat_algorithms_module(char *library_file_path, char *version_number, Reyadeyat_Process *reyadeyat_process);
 
-#endif //REYADEYAT_FILE_DATA_STRUCTURES_H
+#endif //REYADEYAT_ALGORITHMS_H

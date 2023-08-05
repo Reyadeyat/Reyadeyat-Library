@@ -28,20 +28,20 @@
 
 #include "reyadeyat/reyadeyat.h"
 
-#include "internal-file.0.0.0.h"
+#include "file.0.0.0.h"
 
-void internal_reyadeyat_file_create_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process) {
+void reyadeyat_file_create_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process) {
     reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __FILE_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "function '%s' not implemented yet", __func__);
 }
 
-void internal_reyadeyat_file_copy_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process) {
+void reyadeyat_file_copy_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process) {
     reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __FILE_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "function '%s' not implemented yet", __func__);
 }
 
-void internal_reyadeyat_file_save_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process) {
+void reyadeyat_file_save_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process) {
     reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __FILE_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "function '%s' not implemented yet", __func__);
 }
 
-void internal_reyadeyat_file_close_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process) {
+void reyadeyat_file_close_memory_file_v_0_0_0(Reyadeyat_File_Data *reyadeyat_file_data, Reyadeyat_Process *reyadeyat_process) {
     reyadeyat_log_add_log_to_list(REYADEYAT_DEBUG, __FILE_MODULE__, __FILE_NAME__, __func__, __LINE__, reyadeyat_process->log_list, "function '%s' not implemented yet", __func__);
 }

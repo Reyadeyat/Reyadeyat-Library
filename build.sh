@@ -36,14 +36,31 @@ echo "Building Reyadeyat-Library MODE = $MODE - BUILD = $BUILD - PROJECT_PATH = 
 
 #Reyadeyat-Modules
 echo "Cleaning Reyadeyat-Module"
+
+rm -rf $PROJECT_PATH/Reyadeyat-Executables/bin
+rm -rf $PROJECT_PATH/Reyadeyat-Executables/build
+rm -rf $PROJECT_PATH/Reyadeyat-Executables/lib
+
+rm -rf $PROJECT_PATH/Reyadeyat-Module/bin
 rm -rf $PROJECT_PATH/Reyadeyat-Module/build
 rm -rf $PROJECT_PATH/Reyadeyat-Module/lib
 
 if [ $BUILD == "LIIBRARY" ]; then
   echo "Building Reyadeyat Library Modules Mode"
 
-  #File Module
+  #Algorithms Module
+  echo "Building Reyadeyat Modules - Algorithms 0.0.0"
+  source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/algorithms/algorithms.0.0.0/build.sh
+  echo "Building Reyadeyat Modules - Algorithms API"
+  source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/algorithms/build.sh
 
+  #Data Structures Module
+  echo "Building Reyadeyat Modules - Data Structures 0.0.0"
+  source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/data-structures/data-structures.0.0.0/build.sh
+  echo "Building Reyadeyat Modules - Data Structures API"
+  source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/data-structures/build.sh
+
+  #File Module
   echo "Building Reyadeyat Modules - File 0.0.0"
   source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/file/file.0.0.0/build.sh
   echo "Building Reyadeyat Modules - File API"
@@ -60,6 +77,12 @@ if [ $BUILD == "LIIBRARY" ]; then
   source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/utilities/utilities.0.0.0/build.sh
   echo "Building Reyadeyat Modules - Utilities API"
   source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/utilities/build.sh
+
+  #Computer Module
+  echo "Building Reyadeyat Modules - Computer 0.0.0"
+  source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/computer/computer.0.0.0/build.sh
+  echo "Building Reyadeyat Modules - Computer API"
+  source $PROJECT_PATH/Reyadeyat-Modules/src/reyadeyat/computer/build.sh
 else
   echo "Building Reyadeyat Include Modules Mode"
 fi

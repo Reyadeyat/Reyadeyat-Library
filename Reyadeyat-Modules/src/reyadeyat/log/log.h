@@ -2,8 +2,8 @@
 // Created by mnm on 5/5/23.
 //
 
-#ifndef REYADEYAT_C_REYADEYAT_LOG_H
-#define REYADEYAT_C_REYADEYAT_LOG_H
+#ifndef REYADEYAT_REYADEYAT_LOG_H
+#define REYADEYAT_REYADEYAT_LOG_H
 
 //Unix Syslog Severity Level
 REYADEYAT_ENUM_TYPE(Reyadeyat_Log_Severity_Level) {
@@ -40,4 +40,4 @@ REYADEYAT_DATA_TYPE(Reyadeyat_Log_List) {
 void reyadeyat_log_add_log_to_list(Reyadeyat_Log_Severity_Level log_level, const char *module_name, const char *file_name, const char *function_name, int line_number, Reyadeyat_Log_List *reyadeyat_log_list, const char* log_message, ...);
 void reyadeyat_log_print_log_list(FILE *stream, Reyadeyat_Log_List *reyadeyat_log_list);
 
-#endif //REYADEYAT_C_REYADEYAT_LOG_H
+#endif //REYADEYAT_REYADEYAT_LOG_H

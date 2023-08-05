@@ -26,15 +26,9 @@
  * @since 2023.04.01
  */
 
-#ifndef REYADEYAT_FILE_DATA_STRUCTURES_H
-#define REYADEYAT_FILE_DATA_STRUCTURES_H
+#ifndef REYADEYAT_DATA_STRUCTURES_0_0_0_H
+#define REYADEYAT_DATA_STRUCTURES_0_0_0_H
 
-REYADEYAT_DATA_TYPE(Reyadeyat_File) {
-    void *file;
-};
+#include "reyadeyat/reyadeyat.h"
 
-REYADEYAT_DATA_TYPE(Reyadeyat_File_Data) {
-    char *version;
-};
-
-#endif //REYADEYAT_FILE_DATA_STRUCTURES_H
+#endif //REYADEYAT_DATA_STRUCTURES_0_0_0_H
